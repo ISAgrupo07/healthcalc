@@ -289,10 +289,10 @@ Caso 1 – Valor normal
 Una persona con un peso de 70 kg y una altura de 1.75 m debería obtener un IMC aproximado de **22.86**, lo que corresponde a la categoría de **peso normal**.
 
 Caso 2 – Bajo peso  
-Si una persona pesa 50 kg y mide 1.75 m, el IMC obtenido será aproximadamente **16.32**, lo que se clasifica como **bajo peso**.
+Una persona pesa 50 kg y mide 1.75 m, el IMC obtenido será aproximadamente **16.32**, lo que se clasifica como **bajo peso**.
 
 Caso 3 – Sobrepeso  
-Para una persona con un peso de 90 kg y una altura de 1.75 m, el IMC debería ser aproximadamente **29.39**, lo que corresponde a la categoría de **sobrepeso**.
+Una persona con un peso de 90 kg y una altura de 1.75 m, el IMC debería ser aproximadamente **29.39**, lo que corresponde a la categoría de **sobrepeso**.
 
 Caso 4 – Obesidad  
 Si una persona pesa 110 kg y mide 1.75 m, el IMC obtenido será aproximadamente **35.92**, clasificándose como **obesidad**.
@@ -304,10 +304,10 @@ Caso 1 – Paciente masculino
 Para un hombre con una altura de **180 cm**, el peso corporal ideal calculado mediante la fórmula de Lorentz debería ser aproximadamente **72.5 kg**.
 
 Caso 2 – Paciente femenino  
-Para una mujer con una altura de **165 cm**, el peso corporal ideal esperado sería aproximadamente **57.5 kg**.
+Para una mujer con una altura de **165 cm**, el peso corporal ideal sería aproximadamente **57.5 kg**.
 
 Caso 3 – Altura inválida  
-Si se introduce una altura de **0 cm**, el sistema debería detectar que se trata de un valor inválido y mostrar un error en lugar de realizar el cálculo.
+Si se introduce una altura de **0 cm**, el sistema debe detectar que se trata de un valor incorrecto y mostrar un error en lugar de realizar el cálculo.
 
 
 </details>
