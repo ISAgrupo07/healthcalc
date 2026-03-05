@@ -276,7 +276,7 @@ Se comprueba que el sistema lanza un error cuando se introducen valores negativo
 
 Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido los siguientes escenarios clínicos representativos:
 
-* **Caso 1 – Paciente con constantes normales (riesgo bajo):**  
+* **Paciente con constantes normales (riesgo bajo):**  
   - Frecuencia respiratoria: 16 rpm  
   - Saturación de oxígeno: 97 %  
   - Oxígeno suplementario: No  
@@ -289,7 +289,7 @@ Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido 
 
 ---
 
-* **Caso 2 – Paciente con alteraciones moderadas (riesgo medio):**  
+* **Paciente con alteraciones moderadas (riesgo medio):**  
   - Frecuencia respiratoria: 22 rpm  
   - Saturación de oxígeno: 94 %  
   - Oxígeno suplementario: No  
@@ -302,7 +302,7 @@ Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido 
 
 ---
 
-* **Caso 3 – Paciente con deterioro clínico grave (riesgo alto):**  
+* **Paciente con deterioro clínico grave (riesgo alto):**  
   - Frecuencia respiratoria: 30 rpm  
   - Saturación de oxígeno: 88 %  
   - Oxígeno suplementario: Sí  
@@ -315,7 +315,7 @@ Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido 
 
 ---
 
-* **Caso 4 – Validación de datos fisiológicamente imposibles:**  
+* **Validación de datos fisiológicamente imposibles:**  
   El sistema debe detectar valores fuera de los límites biológicos razonables, por ejemplo:
   - Saturación de oxígeno negativa
   - Temperatura corporal mayor de 45 °C
