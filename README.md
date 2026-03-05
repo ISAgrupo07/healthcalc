@@ -252,6 +252,31 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 
 </details>
 
+<details>
+<summary><b>Pruebas de Cálculo del Peso Corporal Ideal (IBW)</b></summary>
+Para medir la precisión de la fórmula de Lorentz y su seguridad:
+
+* **Cálculo correcto para hombres:** Se comprueba que, al introducir una altura válida en centímetros y el género masculino, el resultado sea el esperado matemáticamente según la ecuación.
+* **Cálculo correcto para mujeres:** Se valida el uso de la división especial de la fórmula de Lorentz comprobando que el resultado exacto se aplica al usar el género femenino.
+* **Protección ante datos imposibles:**
+    * El sistema debe rechazar estaturas menores a 30 cm o mayores a 300 cm.
+* **Seguridad en valores categóricos:** Se verifica que el sistema lance una excepción ante identificadores de género erróneos o no reconocidos.
+
+</details>
+
+<details>
+<summary><b>Pruebas de Cálculo de la Métrica NEWS2</b></summary>
+Para validar el sistema de puntuación fisiológico estándar RCP:
+
+* **Paciente sano (Score 0):** Se comprueba que, al introducir valores normales de constantes vitales (paciente alerta, sin oxígeno suplementario, pulso y temperatura normales, etc.), el resultado total sea de 0 puntos.
+* **Paciente crítico (Scores altos):** Se prueban rangos extremos para los distintos parámetros (ej. frecuencia respiratoria = 5) para verificar que proveen los máximos puntos (+3) y que la suma conjunta de la escala es correcta.
+* **Puntuaciones intermedias:** Se comprueban variaciones leves en las constantes vitales para confirmar que el sistema retorna correctamente las penalizaciones parciales de 1 y 2 puntos.
+* **Protección general ante datos imposibles:**
+    * El sistema debe rechazar signos vitales biológicamente imposibles (ej. Saturación SpO2 negativa o mayor al 100%, temperatura por encima de 50ºC).
+    * El sistema debe rechazar estados de conciencia (escala ACVPU) no válidos.
+
+</details>
+
 
 ## Instalación y ejecución
 
@@ -278,37 +303,6 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 - Ejecutar la aplicación: `python main.py <número>`
 - Ejecutar los tests: `pytest -v`
 - Ejecutar los tests con informe de cobertura: `pytest -v --cov=factorial --cov-report=html tests/`
-
-## Casos de prueba (TDD)
-
-Para comprobar que la calculadora funciona correctamente, se han definido varios casos de prueba siguiendo la metodología Test Driven Development (TDD). Estos casos cubren situaciones normales de uso y también algunos casos límite o entradas incorrectas.
-
-### IMC (Índice de Masa Corporal / BMI)
-
-Caso 1 – Valor normal  
-Una persona con un peso de 70 kg y una altura de 1.75 m debería obtener un IMC aproximado de **22.86**, lo que corresponde a la categoría de **peso normal**.
-
-Caso 2 – Bajo peso  
-Una persona pesa 50 kg y mide 1.75 m, el IMC obtenido será aproximadamente **16.32**, lo que se clasifica como **bajo peso**.
-
-Caso 3 – Sobrepeso  
-Una persona con un peso de 90 kg y una altura de 1.75 m, el IMC debería ser aproximadamente **29.39**, lo que corresponde a la categoría de **sobrepeso**.
-
-Caso 4 – Obesidad  
-Si una persona pesa 110 kg y mide 1.75 m, el IMC obtenido será aproximadamente **35.92**, clasificándose como **obesidad**.
-
-
-### PCI (Peso Corporal Ideal / IBW – Fórmula de Lorentz)
-
-Caso 1 – Paciente masculino  
-Para un hombre con una altura de **180 cm**, el peso corporal ideal calculado mediante la fórmula de Lorentz debería ser aproximadamente **72.5 kg**.
-
-Caso 2 – Paciente femenino  
-Para una mujer con una altura de **165 cm**, el peso corporal ideal sería aproximadamente **57.5 kg**.
-
-Caso 3 – Altura inválida  
-Si se introduce una altura de **0 cm**, el sistema debe detectar que se trata de un valor incorrecto y mostrar un error en lugar de realizar el cálculo.
-
 
 </details>
 
