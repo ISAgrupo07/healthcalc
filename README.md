@@ -254,74 +254,26 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 
 <details>
 <summary><b>Pruebas de Cálculo del Peso Corporal Ideal (IBW)</b></summary>
+Para medir la precisión de la fórmula de Lorentz y su seguridad:
 
-Para comprobar que el cálculo del peso corporal ideal funciona correctamente se han definido los siguientes casos de prueba:
-
-* **Cálculo correcto para hombres:**  
-Se comprueba que, al introducir una altura válida en centímetros para un paciente masculino, el sistema devuelve el valor esperado según la fórmula de Lorentz.
-
-* **Cálculo correcto para mujeres:**  
-Se verifica que el sistema aplica correctamente la división correspondiente a la fórmula de Lorentz para pacientes femeninos.
-
-* **Protección ante datos imposibles:**  
-El sistema debe rechazar estaturas menores a 30 cm o mayores a 300 cm.
-
-* **Validación de entradas:**  
-Se comprueba que el sistema lanza un error cuando se introducen valores negativos o iguales a cero.
+* **Cálculo correcto para hombres:** Se comprueba que, al introducir una altura válida en centímetros y el género masculino, el resultado sea el esperado matemáticamente según la ecuación.
+* **Cálculo correcto para mujeres:** Se valida el uso de la división especial de la fórmula de Lorentz comprobando que el resultado exacto se aplica al usar el género femenino.
+* **Protección ante datos imposibles:**
+    * El sistema debe rechazar estaturas menores a 30 cm o mayores a 300 cm.
+* **Seguridad en valores categóricos:** Se verifica que el sistema lance una excepción ante identificadores de género erróneos o no reconocidos.
 
 </details>
 
 <details>
 <summary><b>Pruebas de Cálculo de la Métrica NEWS2</b></summary>
+Para validar el sistema de puntuación fisiológico estándar RCP:
 
-Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido los siguientes escenarios clínicos representativos:
-
-* **Paciente con constantes normales (riesgo bajo):**  
-  - Frecuencia respiratoria: 16 rpm  
-  - Saturación de oxígeno: 97 %  
-  - Oxígeno suplementario: No  
-  - Presión arterial sistólica: 120 mmHg  
-  - Frecuencia cardíaca: 75 bpm  
-  - Temperatura: 36.8 °C  
-  - Nivel de conciencia: Alerta  
-
-  **Resultado esperado:** NEWS2 = 0 (riesgo bajo).
-
----
-
-* **Paciente con alteraciones moderadas (riesgo medio):**  
-  - Frecuencia respiratoria: 22 rpm  
-  - Saturación de oxígeno: 94 %  
-  - Oxígeno suplementario: No  
-  - Presión arterial sistólica: 100 mmHg  
-  - Frecuencia cardíaca: 105 bpm  
-  - Temperatura: 38.2 °C  
-  - Nivel de conciencia: Alerta  
-
-  **Resultado esperado:** NEWS2 entre 3 y 5 puntos (riesgo clínico moderado).
-
----
-
-* **Paciente con deterioro clínico grave (riesgo alto):**  
-  - Frecuencia respiratoria: 30 rpm  
-  - Saturación de oxígeno: 88 %  
-  - Oxígeno suplementario: Sí  
-  - Presión arterial sistólica: 85 mmHg  
-  - Frecuencia cardíaca: 130 bpm  
-  - Temperatura: 39.5 °C  
-  - Nivel de conciencia: Confusión  
-
-  **Resultado esperado:** NEWS2 ≥ 7 puntos (riesgo alto, requiere intervención urgente).
-
----
-
-* **Validación de datos fisiológicamente imposibles:**  
-  El sistema debe detectar valores fuera de los límites biológicos razonables, por ejemplo:
-  - Saturación de oxígeno negativa
-  - Temperatura corporal mayor de 45 °C
-  - Frecuencia respiratoria igual a 0
-
-  **Resultado esperado:** el sistema debe lanzar una excepción o error de validación.
+* **Paciente sano (Score 0):** Se comprueba que, al introducir valores normales de constantes vitales (paciente alerta, sin oxígeno suplementario, pulso y temperatura normales, etc.), el resultado total sea de 0 puntos.
+* **Paciente crítico (Scores altos):** Se prueban rangos extremos para los distintos parámetros (ej. frecuencia respiratoria = 5) para verificar que proveen los máximos puntos (+3) y que la suma conjunta de la escala es correcta.
+* **Puntuaciones intermedias:** Se comprueban variaciones leves en las constantes vitales para confirmar que el sistema retorna correctamente las penalizaciones parciales de 1 y 2 puntos.
+* **Protección general ante datos imposibles:**
+    * El sistema debe rechazar signos vitales biológicamente imposibles (ej. Saturación SpO2 negativa o mayor al 100%, temperatura por encima de 50ºC).
+    * El sistema debe rechazar estados de conciencia (escala ACVPU) no válidos.
 
 </details>
 
@@ -350,7 +302,7 @@ Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido 
 ### Ejecución
 - Ejecutar la aplicación: `python main.py <número>`
 - Ejecutar los tests: `pytest -v`
-- Ejecutar los tests con informe de cobertura: `pytest -v --cov=healthcalc --cov-report=html tests/`
+- Ejecutar los tests con informe de cobertura: `pytest -v --cov=factorial --cov-report=html tests/`
 
 </details>
 
