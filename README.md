@@ -252,6 +252,47 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 
 </details>
 
+<details>
+<summary><b>Pruebas de Cálculo del Peso Corporal Ideal (IBW)</b></summary>
+
+Para comprobar que el cálculo del peso corporal ideal funciona correctamente se han definido los siguientes casos de prueba:
+
+* **Cálculo correcto para hombres:**  
+Se comprueba que, al introducir una altura válida en centímetros para un paciente masculino, el sistema devuelve el valor esperado según la fórmula de Lorentz.
+
+* **Cálculo correcto para mujeres:**  
+Se verifica que el sistema aplica correctamente la división correspondiente a la fórmula de Lorentz para pacientes femeninos.
+
+* **Protección ante datos imposibles:**  
+El sistema debe rechazar estaturas menores a 30 cm o mayores a 300 cm.
+
+* **Validación de entradas:**  
+Se comprueba que el sistema lanza un error cuando se introducen valores negativos o iguales a cero.
+
+</details>
+
+<details>
+<summary><b>Pruebas de Cálculo de la Métrica NEWS2</b></summary>
+
+Para validar el funcionamiento del sistema de puntuación NEWS2 se han definido diferentes escenarios clínicos:
+
+* **Paciente con constantes normales:**  
+Se introducen valores normales de constantes vitales (respiración, saturación de oxígeno, presión arterial, pulso, temperatura y estado de conciencia).  
+El resultado esperado es una puntuación NEWS2 igual a 0.
+
+* **Paciente con alteraciones moderadas:**  
+Se prueban valores ligeramente fuera del rango normal (por ejemplo frecuencia respiratoria elevada o temperatura moderadamente alta).  
+El sistema debe devolver una puntuación intermedia.
+
+* **Paciente crítico:**  
+Se introducen valores extremos en varias constantes vitales (por ejemplo saturación baja, presión sistólica baja y frecuencia cardíaca elevada).  
+El resultado esperado es una puntuación NEWS2 alta que indique riesgo clínico.
+
+* **Protección ante datos imposibles:**  
+El sistema debe rechazar valores fisiológicamente imposibles como saturaciones negativas o temperaturas extremadamente altas.
+
+</details>
+
 
 ## Instalación y ejecución
 
@@ -277,7 +318,7 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 ### Ejecución
 - Ejecutar la aplicación: `python main.py <número>`
 - Ejecutar los tests: `pytest -v`
-- Ejecutar los tests con informe de cobertura: `pytest -v --cov=factorial --cov-report=html tests/`
+- Ejecutar los tests con informe de cobertura: `pytest -v --cov=healthcalc --cov-report=html tests/`
 
 </details>
 
