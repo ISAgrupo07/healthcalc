@@ -252,31 +252,6 @@ Para cada categoría, probamos valores que están justo en el límite para asegu
 
 </details>
 
-<details>
-<summary><b>Pruebas de Cálculo del Peso Corporal Ideal (IBW)</b></summary>
-Para medir la precisión de la fórmula de Lorentz y su seguridad:
-
-* **Cálculo correcto para hombres:** Se comprueba que, al introducir una altura válida en centímetros y el género masculino, el resultado sea el esperado matemáticamente según la ecuación.
-* **Cálculo correcto para mujeres:** Se valida el uso de la división especial de la fórmula de Lorentz comprobando que el resultado exacto se aplica al usar el género femenino.
-* **Protección ante datos imposibles:**
-    * El sistema debe rechazar estaturas menores a 30 cm o mayores a 300 cm.
-* **Seguridad en valores categóricos:** Se verifica que el sistema lance una excepción ante identificadores de género erróneos o no reconocidos.
-
-</details>
-
-<details>
-<summary><b>Pruebas de Cálculo de la Métrica NEWS2</b></summary>
-Para validar el sistema de puntuación fisiológico estándar RCP:
-
-* **Paciente sano (Score 0):** Se comprueba que, al introducir valores normales de constantes vitales (paciente alerta, sin oxígeno suplementario, pulso y temperatura normales, etc.), el resultado total sea de 0 puntos.
-* **Paciente crítico (Scores altos):** Se prueban rangos extremos para los distintos parámetros (ej. frecuencia respiratoria = 5) para verificar que proveen los máximos puntos (+3) y que la suma conjunta de la escala es correcta.
-* **Puntuaciones intermedias:** Se comprueban variaciones leves en las constantes vitales para confirmar que el sistema retorna correctamente las penalizaciones parciales de 1 y 2 puntos.
-* **Protección general ante datos imposibles:**
-    * El sistema debe rechazar signos vitales biológicamente imposibles (ej. Saturación SpO2 negativa o mayor al 100%, temperatura por encima de 50ºC).
-    * El sistema debe rechazar estados de conciencia (escala ACVPU) no válidos.
-
-</details>
-
 
 ## Instalación y ejecución
 
