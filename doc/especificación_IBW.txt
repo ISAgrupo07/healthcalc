@@ -1,0 +1,24 @@
+Caso de Uso: Calcular Peso Ideal (IBW). 
+Actor principal: Usuario. 
+Ámbito: Calculadora de salud. 
+Nivel: Objetivo de usuario. 
+Descripción: El usuario quiere calcular su peso ideal (IBW). El sistema le pide que introduzca su sexo y su altura. Una vez introducida la información, el sistema comprueba que los datos sean válidos, y aplica la fórmula correspondiente para calcular el peso ideal. Finalmente, el resultado se muestra al usuario en pantalla.
+Interesados: 
+  Usuario: Quiere obtener una estimación de su peso ideal de forma rápida y sencilla.
+Precondiciones: La calculadora tiene que estar encendida y en el menú principal. 
+Disparador: El usuario elige la opción de calcular el IBW. 
+Garantía de éxito:
+El sistema calcula correctamente el peso ideal a partir de los datos introducidos y muestra el resultado al usuario.
+Garantía mínima:
+Si los datos introducidos no son válidos, el sistema informa del error y permite al usuario introducirlos nuevamente sin que la aplicación se bloquee.
+Escenario principal de éxito:
+1-El usuario selecciona la opción para calcular el IBW.
+2-El sistema le pide que introduzca su sexo y su altura.
+3-El usuario mete los dos datos.
+4-El sistema comprueba que la altura es un número válido y que el sexo es correcto.
+5-El sistema calcula el IBW usando la fórmula correspondiente.
+6-El sistema muestra el resultado final al usuario.
+Extensiones: 
+4a. El usuario introduce en la altura letras, números negativos o un sexo que no cuadra: 
+4a1. El sistema le avisa de que los datos introducidos están mal. 
+4a2. El sistema le vuelve a pedir los datos (vuelve al paso 2). 
