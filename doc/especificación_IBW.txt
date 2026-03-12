@@ -18,7 +18,7 @@ Escenario principal de éxito:
 4-El sistema comprueba que la altura es un número válido y que el sexo es correcto.
 5-El sistema calcula el IBW usando la fórmula correspondiente.
 6-El sistema muestra el resultado final al usuario.
-Extensiones: 
-4a. El usuario introduce en la altura letras, números negativos o un sexo que no cuadra: 
-4a1. El sistema le avisa de que los datos introducidos están mal. 
-4a2. El sistema le vuelve a pedir los datos (vuelve al paso 2). 
+Extensiones:
+4a. Datos de entrada inválidos:
+4a1. El usuario introduce en la altura letras, números negativos o un sexo que no cuadra. 
+4a2. El sistema informa que los datos introducidos no son válidos, y solicita que el sistema le vuelve a pedir los datos (vuelve al paso 2). 
