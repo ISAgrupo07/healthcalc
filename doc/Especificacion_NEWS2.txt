@@ -1,0 +1,24 @@
+Caso de Uso: Calcular Puntuación de la Escala NEWS2. 
+Actor principal: Usuario. 
+Ámbito: Calculadora de salud. 
+Nivel: Objetivo de usuario. 
+Descripción: El sistema calcula la puntuación usando la escala NEWS2. El sistema le pide al usuario que introduzca los signos vitales del paciente. Una vez introducida la información, el sistema comprueba que los datos sean válidos, y realiza las comprobaciones para sumar los puntos correspondientes. Finalmente, el resultado se muestra al usuario en pantalla.
+Interesados: 
+  Usuario: Quiere obtener la puntuación NEWS2 de forma rápida y sencilla.
+Precondiciones: La calculadora tiene que estar encendida y en el menú principal. 
+Disparador: El usuario elige la opción de calcular el puntuación NEWS2. 
+Garantía de éxito:
+El sistema calcula correctamente la puntuación NEWS2 a partir de los datos introducidos y muestra el resultado al usuario.
+Garantía mínima:
+Si los datos introducidos no son válidos, el sistema informa del error y permite al usuario introducirlos nuevamente sin que la aplicación se bloquee.
+Escenario principal de éxito:
+1-El usuario selecciona la opción para calcular la puntuación NEWS2.
+2-El sistema le pide que introduzca lo parámetros: frecuencia respiratoria, saturación de oxígeno, uso de oxígeno suplementario, temperatura, presión arterial sistólica, frecuencia cardíaca y nivel de conciencia.
+3-El usuario introduce los dos datos.
+4-El sistema comprueba que los datos están dentro de los rangos de valores permitidos para cada variable.
+5-El sistema calcula la puntuación NEWS2 haciendo las comprobaciones pertinentes.
+6-El sistema muestra el resultado final al usuario.
+Extensiones:
+4a. Datos de entrada inválidos:
+4a1. El usuario introduce valores numéricos fuera de los rangos permitidos en las variables numéricas, cadenas de texto inválidas para el nivel de conciencia o un valor no booleano para el uso de oxígeno suplementario. 
+4a2. El sistema informa que los datos introducidos no son válidos, y solicita que el sistema le vuelve a pedir los datos (vuelve al paso 2). 
