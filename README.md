@@ -354,4 +354,20 @@ También se comprueba que el sistema detecte valores no válidos en la escala de
 - Ejecutar los tests: Clic en Run Tests usando el IDE o con Maven: `mvn test`
 - Ejecutar los tests con informe de cobertura (previamente configurado en pom.xml): `mvn test`
 
+## Especificación
+
+### Casos de uso
+
+En la siguiente imagen se muestra el diagrama de casos de uso del proyecto (HealthCalc). En color verde se destacan las métricas implementadas en la Práctica 1, en rojo las pendientes de implementar, y en azul un nuevo caso de uso propuesto.
+
+![Diagrama de Casos de Uso](doc/Diagrama_Casos_de_uso.png)
+
+A continuación se enlazan las especificaciones formales de los casos de uso implementados:
+
+* [Especificación de BMI](doc/Especificacion_BMI.txt)
+* [Especificación de IBW](doc/especificación_IBW.txt)
+* [Especificación de NEWS2](doc/Especificacion_NEWS2.txt)
+
+
+
 </details>
