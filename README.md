@@ -354,6 +354,8 @@ También se comprueba que el sistema detecte valores no válidos en la escala de
 - Ejecutar los tests: Clic en Run Tests usando el IDE o con Maven: `mvn test`
 - Ejecutar los tests con informe de cobertura (previamente configurado en pom.xml): `mvn test`
 
+</details>
+
 ## Especificación
 
 ### Casos de uso
@@ -367,7 +369,3 @@ A continuación se enlazan las especificaciones formales de los casos de uso imp
 * [Especificación de BMI](doc/Especificacion_BMI.txt)
 * [Especificación de IBW](doc/especificación_IBW.txt)
 * [Especificación de NEWS2](doc/Especificacion_NEWS2.txt)
-
-
-
-</details>
