@@ -9,13 +9,21 @@ class HealthCalcImpl(HealthCalc):
         if bmi > 150:
             raise InvalidHealthDataException("BMI must be within a possible biological range [0-150].")
         
-        result = "Obesity"
+        result = "Obesity class III"
+        if bmi < 16:
+            result = "Severe thinness"
+        if bmi < 17:
+            result = "Moderate thinness"
         if bmi < 18.5:
-            result = "Underweight"
+            result = "Mild thinness"
         elif bmi < 25:
             result = "Normal weight"
         elif bmi < 30:
             result = "Overweight"
+        elif bmi < 35:
+            result = "Obesity class I"
+        elif bmi < 40:
+            result = "Obesity class II"
         return result
 
     def bmi(self, weight: float, height: float) -> float:
