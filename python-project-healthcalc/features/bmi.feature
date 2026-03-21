@@ -4,7 +4,7 @@ Feature: Cálculo del índice de masa corporal (BMI)
   Quiero calcular mi BMI
   Para conocer mi estado de salud
 
-  Scenario: Calcular BMI correctamente
+  Scenario: Calcular el BMI correctamente
     Given que introduzco una altura de 1.70 metros
     And un peso de 65 kg
     When calculo el BMI
