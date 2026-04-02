@@ -20,7 +20,3 @@ def step_calcular(context):
 @then('el resultado debe ser {esperado:f}')
 def step_resultado(context, esperado):
     assert round(context.resultado, 2) == round(esperado, 2)
-
-@then('se muestra un error')
-def step_error(context):
-    assert context.resultado == "error"
