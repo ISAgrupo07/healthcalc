@@ -9,21 +9,13 @@ class HealthCalcImpl(HealthCalc):
         if bmi > 150:
             raise InvalidHealthDataException("BMI must be within a possible biological range [0-150].")
         
-        result = "Obesity class III"
-        if bmi < 16:
-            result = "Severe thinness"
-        if bmi < 17:
-            result = "Moderate thinness"
+        result = "Obesity"
         if bmi < 18.5:
-            result = "Mild thinness"
+            result = "Underweight"
         elif bmi < 25:
             result = "Normal weight"
         elif bmi < 30:
             result = "Overweight"
-        elif bmi < 35:
-            result = "Obesity class I"
-        elif bmi < 40:
-            result = "Obesity class II"
         return result
 
     def bmi(self, weight: float, height: float) -> float:
@@ -109,15 +101,15 @@ class HealthCalcImpl(HealthCalc):
         elif (temp <= 36 or temp > 38):
             news2 = news2 + 1
 
-        if frecResp < 0 or frecResp > 100:
+        if frecResp <= 0 or frecResp >= 100:
             raise InvalidHealthDataException("Respiratory rate must be between 0 - 100 rpm.")
-        if oxSat < 0 or oxSat > 100:
+        if oxSat <= 0 or oxSat >= 100:
             raise InvalidHealthDataException("Oxigen saturation rate must be between 0 - 100 %.")
-        if preArtSis < 0 or preArtSis > 400:
+        if preArtSis <= 0 or preArtSis >= 400:
             raise InvalidHealthDataException("Systolic blood pressure must be between 0 - 400 mmHg.")
-        if frecCard < 0 or frecCard > 300:
+        if frecCard <= 0 or frecCard >= 300:
             raise InvalidHealthDataException("Heart rate rate must be between 0 - 300 lpm.") 
-        if temp < 20 or temp > 50:
+        if temp <= 20 or temp >= 50:
             raise InvalidHealthDataException("Oxigen saturation rate must be between 20 - 50 ºC.")
         
         return news2
