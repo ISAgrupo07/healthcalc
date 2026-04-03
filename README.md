@@ -355,3 +355,41 @@ También se comprueba que el sistema detecte valores no válidos en la escala de
 - Ejecutar los tests con informe de cobertura (previamente configurado en pom.xml): `mvn test`
 
 </details>
+
+## Behaviour Driven Development
+Los detalles del sistema se han descrito con historias de usuario:
+<details>
+<summary><b>User Story del cálculo de BMI</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario, quiero calcular mi BMI para conocer mi estado de salud.* | 1. Calcular el BMi correctamente <br> 2. Altura inválida <br> 3. Peso inválido | [bmi.feature](./features/bmi.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story de la clasificación de BMI</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero conocer la clasificación de mi BMI para entender mi estado de salud.* | 1. Clasificación normal <br> 2. Bajo peso <br> 3. Sobrepeso <br> 4. BMI inválido negativo | [bmi_classification.feature](./features/bmi_classification.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story del cálculo de IBW</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero calcular mi peso corporal ideal (IBW) para tener una referencia de peso saludable.* | 1. Cálculo correcto para un hombre <br> 2. Cálculo correcto para una mujer <br> 3. Altura por debajo del rango válido <br> 4. Altura por encima del rango válido <br> 5. Altura igual a cero <br> 6. Género no reconocido | [ibw.feature](./features/ibw.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story del cálculo de NEWS2</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero calcular la puntuación NEWS2 de un paciente para medir el deterioro fisiológico del paciente.* | 1. Cálculo correcto <br> 2. Cálculo coon valores en puntos límites <br> 3. Valores fuera del rango válido | [news2.feature](./features/news2.feature) |
+
+</details>
