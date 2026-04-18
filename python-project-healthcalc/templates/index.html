@@ -37,7 +37,7 @@
                 <button type="submit" class="btn-calcular">CALCULAR</button>
             </form>
 
-            {% if result != None %}
+            {% if result != None or error %}
             <div class="result-box">
                 {% if error %}
                     <p class="error">{{ error }}</p>
@@ -81,7 +81,7 @@
                 <button type="submit" class="btn-calcular">CALCULAR</button>
             </form>
 
-            {% if result != None %}
+            {% if result != None or error %}
             <div class="result-box">
                 {% if error %}
                     <p class="error">{{ error }}</p>
@@ -106,20 +106,20 @@
                         <input type="number" id="frecResp" name="frecResp" step="any" value="{{ frecResp if frecResp != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="oxSat">Saturación O2 (%)</label>
-                        <input type="number" id="oxSat" name="oxSat" step="any" value="{{ oxSat if oxSat != None else '' }}" required>
+                        <label for="frecCard">Frecuencia Cardíaca (lpm)</label>
+                        <input type="number" id="frecCard" name="frecCard" step="any" value="{{ frecCard if frecCard != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="oxSup">Oxígeno Suplementario</label>
-                        <input type="checkbox" id="oxSup" name="oxSup" value="true" {% if oxSup %}checked{% endif %}>
+                        <label for="oxSat">Saturación O2 (%)</label>
+                        <input type="number" id="oxSat" name="oxSat" step="any" value="{{ oxSat if oxSat != None else '' }}" required>
                     </div>
                     <div class="input-group">
                         <label for="preArtSis">Pres. Arterial Sistólica (mmHg)</label>
                         <input type="number" id="preArtSis" name="preArtSis" step="any" value="{{ preArtSis if preArtSis != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="frecCard">Frecuencia Cardíaca (lpm)</label>
-                        <input type="number" id="frecCard" name="frecCard" step="any" value="{{ frecCard if frecCard != None else '' }}" required>
+                        <label for="temp">Temperatura (°C)</label>
+                        <input type="number" id="temp" name="temp" step="any" value="{{ temp if temp != None else '' }}" required>
                     </div>
                     <div class="input-group">
                         <label for="consciente">Nivel de Consciencia</label>
@@ -129,15 +129,18 @@
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="temp">Temperatura (°C)</label>
-                        <input type="number" id="temp" name="temp" step="any" value="{{ temp if temp != None else '' }}" required>
+                        <label>Oxígeno Suplementario</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="oxSup" name="oxSup" value="true" {% if oxSup %}checked{% endif %}>
+                            <label for="oxSup">Sí</label>
+                        </div>
                     </div>
                 </div>
                 
                 <button type="submit" class="btn-calcular">CALCULAR</button>
             </form>
 
-            {% if result != None %}
+            {% if result != None or error %}
             <div class="result-box">
                 {% if error %}
                     <p class="error">{{ error }}</p>
