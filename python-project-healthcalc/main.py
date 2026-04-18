@@ -1,5 +1,107 @@
+from flask import Flask, render_template, request
 import sys
 from healthcalc.health_calc_impl import HealthCalcImpl
+
+app = Flask(__name__)
+calc = HealthCalcImpl()
+@app.route("/")
+def home():
+    return render_template(
+        "index.html",
+        active_tab="bmi",
+        altura=None,
+        peso=None,
+        result=None,
+        clasificacion=None,
+        error=None
+    )
+
+
+@app.route("/bmi", methods=["GET","POST"])
+def bmi():
+    altura = None
+    peso = None
+    result = None
+    clasificacion = None
+    error = None
+
+    if request.method == "POST":
+        try:
+            altura = float(request.form["altura"])
+            peso = float(request.form["peso"])
+
+            bmi_value = calc.bmi(peso, altura/100)
+            result = bmi_value
+            clasificacion = calc.bmi_classification(bmi_value)
+
+        except Exception as e:
+            error = str(e)
+
+    return render_template("index.html",
+                           active_tab="bmi",
+                           altura=altura,
+                           peso=peso,
+                           result=result,
+                           clasificacion=clasificacion,
+                           error=error)
+
+@app.route("/ibw", methods=["GET","POST"])
+def ibw():
+    altura = None
+    sexo = None
+    result = None
+    error = None
+
+    if request.method == "POST":
+        try:
+            altura = float(request.form["altura"])
+            sexo = request.form["sexo"]
+
+            if sexo == "hombre":
+                sexo = "man"
+            else:
+                sexo = "woman"
+
+            result = calc.ibw(altura, sexo)
+
+        except Exception as e:
+            error = str(e)
+
+    return render_template(
+        "index.html",
+        active_tab="ibw",
+        altura=altura,
+        sexo=sexo,
+        result=result,
+        error=error
+    )
+
+@app.route("/news2", methods=["GET","POST"])
+def news2():
+    result = None
+    error = None
+
+    if request.method == "POST":
+        try:
+            resp = int(request.form["frecResp"])
+            spo2 = int(request.form["oxSat"])
+            supp = "oxSup" in request.form
+            sys_bp = int(request.form["preArtSis"])
+            hr = int(request.form["frecCard"])
+            consc = request.form["consciente"]
+            temp = float(request.form["temp"])
+
+            result = calc.news2(resp, spo2, supp, sys_bp, hr, consc, temp)
+
+        except Exception as e:
+            error = str(e)
+
+    return render_template(
+        "index.html",
+        active_tab="news2",
+        result=result,
+        error=error
+    )
 
 def print_menu():
     print("\n=== HealthCalc ===")
@@ -58,4 +160,4 @@ def main():
             print("Invalid option. Please try again.")
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)

@@ -44,8 +44,7 @@
                 {% else %}
                     <div class="result-row">
                         <label>BMI:</label>
-                        <input type="text" value="{{ result|round(2) }}" readonly>
-                    </div>
+                            <input type="text" value="{{ result|round(2) if result else '' }}" readonly>                    </div>
                     <div class="result-row">
                         <label>Clasificación:</label>
                         <input type="text" value="{{ clasificacion }}" readonly>
@@ -88,7 +87,7 @@
                     <p class="error">{{ error }}</p>
                 {% else %}
                     <div class="result-row">
-                        <input type="text" value="{{ result|round(2) }} kg" readonly>
+                        <input type="text" value="{{ result|round(2) if result else '' }} kg" readonly>
                     </div>
                 {% endif %}
             </div>
