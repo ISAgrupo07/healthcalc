@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from healthcalc.health_calc_impl import HealthCalcImpl
 
 app = Flask(__name__)
-calc = HealthCalcImpl()
+calc = HealthCalcImpl.getInstance()
 
 # Ruta principal (BMI por defecto)
 @app.route("/")

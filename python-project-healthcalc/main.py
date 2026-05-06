@@ -10,7 +10,8 @@ def print_menu():
     print("==================")
 
 def main():
-    calc = HealthCalcImpl()
+
+    calc = HealthCalcImpl.getInstance()
     
     while True:
         print_menu()
