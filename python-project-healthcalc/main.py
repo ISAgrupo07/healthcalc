@@ -1,4 +1,5 @@
 from healthcalc.health_calc_impl import HealthCalcImpl
+from healthcalc.health_hospital_adapter import HealthHospitalAdapter
 
 
 def print_menu():
@@ -6,13 +7,14 @@ def print_menu():
     print("1. Calculate BMI & Classification")
     print("2. Calculate Ideal Body Weight (IBW)")
     print("3. Calculate NEWS2 Score")
-    print("4. Exit")
+    print("4. SIMULAR SISTEMA HOSPITAL (Patrón Adapter)")
+    print("5. Exit")
     print("==================")
 
 def main():
 
     calc = HealthCalcImpl.getInstance()
-    
+    hospital_service = HealthHospitalAdapter()
     while True:
         print_menu()
         choice = input("Select an option (1-4): ")
@@ -53,6 +55,14 @@ def main():
                 print(f"\nError: {e}")
                 
         elif choice == '4':
+            try:
+                altura_m = float(input("Hospital - Introduzca altura en cm: "))
+                peso_g = int(input("Hospital - Introduzca peso en Kg: "))
+                bmi, classification = hospital_service.indiceMasaCorporal(altura_m, peso_g)
+                print(f"\n[Hospital API] -> IMC: {bmi:.2f} | Clasificación: {classification}")
+            except Exception as e:
+                print(f"\nError en la API del Hospital: {e}")
+        elif choice == '5':
             print("Exiting HealthCalc...")
             break
         else:
