@@ -17,7 +17,7 @@ def main():
     hospital_service = HealthHospitalAdapter()
     while True:
         print_menu()
-        choice = input("Select an option (1-4): ")
+        choice = input("Select an option (1-5): ")
         
         if choice == '1':
             try:
@@ -56,10 +56,23 @@ def main():
                 
         elif choice == '4':
             try:
-                altura_m = float(input("Hospital - Introduzca altura en cm: "))
-                peso_g = int(input("Hospital - Introduzca peso en Kg: "))
-                bmi, classification = hospital_service.indiceMasaCorporal(altura_m, peso_g)
-                print(f"\n[Hospital API] -> IMC: {bmi:.2f} | Clasificación: {classification}")
+                print("\n--- Hospital System Simulation ---")
+                print("1. Hospital BMI")
+                print("2. Hospital IBW")
+                hospital_choice = input("Select hospital option (1-2): ").strip()
+
+                if hospital_choice == '1':
+                    altura_m = float(input("Hospital - Introduzca altura en cm: "))
+                    peso_g = int(input("Hospital - Introduzca peso en Kg: "))
+                    bmi, classification = hospital_service.indiceMasaCorporal(altura_m, peso_g)
+                    print(f"\n[Hospital API] -> IMC: {bmi:.2f} | Clasificación: {classification}")
+                elif hospital_choice == '2':
+                    genero = input("Hospital - Introduzca género (man/woman): ")
+                    altura_cm = float(input("Hospital - Introduzca altura en cm: "))
+                    ibw_val = hospital_service.pesoCorporalIdeal(genero, altura_cm)
+                    print(f"\n[Hospital API] -> Peso Corporal Ideal: {ibw_val} kg")
+                else:
+                    print("Opción hospitalaria inválida. Intente 1 o 2.")
             except Exception as e:
                 print(f"\nError en la API del Hospital: {e}")
         elif choice == '5':
