@@ -1,5 +1,6 @@
 from healthcalc.health_calc_impl import HealthCalcImpl
-from healthcalc.health_hospital_adapter import HealthHospitalAdapter
+from healthcalc.health_hospital_proxy import HealthHospitalProxy 
+from healthcalc. health_hospital_adapter import HealthHospitalAdapter
 
 
 def print_menu():
@@ -8,16 +9,18 @@ def print_menu():
     print("2. Calculate Ideal Body Weight (IBW)")
     print("3. Calculate NEWS2 Score")
     print("4. SIMULAR SISTEMA HOSPITAL (Patrón Adapter)")
-    print("5. Exit")
+    print("5. VER ESTADÍSTICAS DEL HOSPITAL (Patrón Proxy)")
+    print("6. Exit")
     print("==================")
 
 def main():
 
     calc = HealthCalcImpl.getInstance()
-    hospital_service = HealthHospitalAdapter()
+    #hospital_service = HealthHospitalAdapter()
+    hospital_service = HealthHospitalProxy()
     while True:
         print_menu()
-        choice = input("Select an option (1-4): ")
+        choice = input("Select an option (1-6): ")
         
         if choice == '1':
             try:
@@ -62,7 +65,22 @@ def main():
                 print(f"\n[Hospital API] -> IMC: {bmi:.2f} | Clasificación: {classification}")
             except Exception as e:
                 print(f"\nError en la API del Hospital: {e}")
+
         elif choice == '5':
+            print("\n=== ESTADÍSTICAS DEL SISTEMA (HealthStats) ===")
+            total_pacientes = hospital_service.numTotalPacientes()
+            print(f"Número total de consultas: {total_pacientes}")
+            
+            if total_pacientes > 0:
+                print(f"Altura media de pacientes: {hospital_service.alturaMedia():.2f} cm")
+                print(f"Peso medio de pacientes: {hospital_service.pesoMedio():.2f} kg")
+                print(f"IMC medio registrado: {hospital_service.imcMedio():.2f}")
+                print(f"Cantidad de hombres (H): {hospital_service.numSexoH()}")
+                print(f"Cantidad de mujeres (M): {hospital_service.numSexoM()}")
+            else:
+                print("No hay datos registrados en el historial todavía. Realice consultas en la opción 4 primero.")
+            print("==============================================")
+        elif choice == '6':
             print("Exiting HealthCalc...")
             break
         else:
