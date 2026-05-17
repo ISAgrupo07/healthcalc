@@ -1,15 +1,48 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 from healthcalc.health_calc_impl import HealthCalcImpl
+from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
+from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
 
 app = Flask(__name__)
-calc = HealthCalcImpl.getInstance()
+app.secret_key = "clave-healthcalc"
 
-# Ruta principal (BMI por defecto)
+def get_calc():
+    base = HealthCalcImpl.getInstance()
+    unidades = session.get("units", "eu")
+    idioma = session.get("lang", "es")
+    if unidades == "us":
+        base = AmericanUnit(base)
+    else:
+        base = EuropeanUnit(base)
+    if idioma == "es":
+        return SpanishLanguage(base)
+    return EnglishLanguage(base)
+
+def contexto(**extra):
+    lang = session.get("lang", "es")
+    units = session.get("units", "eu")
+    if units == "us":
+        u = {"weight": "lb", "height": "in", "temp": "F"}
+    else:
+        u = {"weight": "kg", "height": "cm", "temp": "C"}
+    ctx = {"lang": lang, "units": units, "u": u}
+    ctx.update(extra)
+    return ctx
+
+@app.route("/settings", methods=["POST"])
+def settings():
+    lang = request.form.get("lang", "es")
+    units = request.form.get("units", "eu")
+    if lang in ("es", "en"):
+        session["lang"] = lang
+    if units in ("eu", "us"):
+        session["units"] = units
+    return redirect(request.referrer or url_for("home"))
+
 @app.route("/")
 def home():
-    return render_template("index.html", active_tab="bmi")
+    return render_template("index.html", active_tab="bmi", **contexto())
 
-# Ruta para BMI
 @app.route("/bmi", methods=["GET", "POST"])
 def bmi():
     result = None
@@ -22,16 +55,22 @@ def bmi():
         try:
             altura = float(request.form["altura"])
             peso = float(request.form["peso"])
-            bmi_value = calc.bmi(peso, altura / 100)
+            calc = get_calc()
+            # si esta en eu hay que pasar cm a m, en us no
+            if session.get("units", "eu") == "eu":
+                altura_calc = altura / 100
+            else:
+                altura_calc = altura
+            bmi_value = calc.bmi(peso, altura_calc)
             result = bmi_value
             clasificacion = calc.bmi_classification(bmi_value)
         except Exception as e:
             error = str(e)
 
-    return render_template("index.html", active_tab="bmi", altura=altura, peso=peso, result=result,
-                           clasificacion=clasificacion, error=error)
+    return render_template("index.html", active_tab="bmi", altura=altura, peso=peso,
+                           result=result, clasificacion=clasificacion, error=error,
+                           **contexto())
 
-# Ruta para IBW
 @app.route("/ibw", methods=["GET", "POST"])
 def ibw():
     result = None
@@ -43,13 +82,13 @@ def ibw():
         try:
             altura = float(request.form["altura"])
             sexo = request.form["sexo"]
-            result = calc.ibw(altura, sexo)
+            result = get_calc().ibw(altura, sexo)
         except Exception as e:
             error = str(e)
 
-    return render_template("index.html", active_tab="ibw", altura=altura, sexo=sexo, result=result, error=error)
+    return render_template("index.html", active_tab="ibw", altura=altura, sexo=sexo,
+                           result=result, error=error, **contexto())
 
-# Ruta para NEWS2
 @app.route("/news2", methods=["GET", "POST"])
 def news2():
     result = None
@@ -71,13 +110,15 @@ def news2():
             frecCard = int(request.form["frecCard"])
             consciente = request.form["consciente"]
             temp = float(request.form["temp"])
-
-            result = calc.news2(frecResp, oxSat, oxSup, preArtSis, frecCard, consciente, temp)
+            result = get_calc().news2(frecResp, oxSat, oxSup, preArtSis,
+                                      frecCard, consciente, temp)
         except Exception as e:
             error = str(e)
 
-    return render_template("index.html", active_tab="news2", frecResp=frecResp, oxSat=oxSat, oxSup=oxSup,
-                           preArtSis=preArtSis, frecCard=frecCard, consciente=consciente, temp=temp, result=result, error=error)
+    return render_template("index.html", active_tab="news2", frecResp=frecResp, oxSat=oxSat,
+                           oxSup=oxSup, preArtSis=preArtSis, frecCard=frecCard,
+                           consciente=consciente, temp=temp, result=result, error=error,
+                           **contexto())
 
 if __name__ == "__main__":
     app.run(debug=True)

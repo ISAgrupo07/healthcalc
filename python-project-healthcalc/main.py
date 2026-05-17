@@ -1,103 +1,146 @@
 from healthcalc.health_calc_impl import HealthCalcImpl
-from healthcalc.health_hospital_proxy import HealthHospitalProxy 
-from healthcalc. health_hospital_adapter import HealthHospitalAdapter
+from healthcalc.health_hospital_proxy import HealthHospitalProxy
+from healthcalc.health_hospital_adapter import HealthHospitalAdapter
+from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
+from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
 
+def crear_calc(idioma, unidades):
+    base = HealthCalcImpl.getInstance()
+    if unidades == "us":
+        base = AmericanUnit(base)
+    else:
+        base = EuropeanUnit(base)
+    if idioma == "es":
+        return SpanishLanguage(base)
+    else:
+        return EnglishLanguage(base)
 
-def print_menu():
+def unidades_str(unidades):
+    if unidades == "us":
+        return {"peso": "lb", "altura": "in", "temp": "F"}
+    return {"peso": "kg", "altura": "cm", "temp": "C"}
+
+def print_menu(idioma, unidades):
     print("\n=== HealthCalc ===")
-    print("1. Calculate BMI & Classification")
-    print("2. Calculate Ideal Body Weight (IBW)")
-    print("3. Calculate NEWS2 Score")
-    print("4. SIMULAR SISTEMA HOSPITAL (Patrón Adapter)")
-    print("5. VER ESTADÍSTICAS DEL HOSPITAL (Patrón Proxy)")
-    print("6. Exit")
+    print(f"[idioma={idioma} | unidades={unidades}]")
+    if idioma == "es":
+        print("1. Calcular IMC y Clasificación")
+        print("2. Calcular Peso Corporal Ideal (IBW)")
+        print("3. Calcular NEWS2")
+        print("4. Simular sistema Hospital (Adapter)")
+        print("5. Ver estadísticas Hospital (Proxy)")
+        print("6. Cambiar idioma")
+        print("7. Cambiar unidades")
+        print("8. Salir")
+    else:
+        print("1. Calculate BMI & Classification")
+        print("2. Calculate Ideal Body Weight (IBW)")
+        print("3. Calculate NEWS2 Score")
+        print("4. Hospital System Simulation (Adapter)")
+        print("5. View Hospital Statistics (Proxy)")
+        print("6. Change language")
+        print("7. Change unit system")
+        print("8. Exit")
     print("==================")
 
 def main():
+    idioma = "es"
+    unidades = "eu"
+    calc = crear_calc(idioma, unidades)
+    hospital = HealthHospitalProxy()
 
-    calc = HealthCalcImpl.getInstance()
-    #hospital_service = HealthHospitalAdapter()
-    hospital_service = HealthHospitalProxy()
     while True:
-        print_menu()
-        choice = input("Select an option (1-6): ")
-        
-        if choice == '1':
+        u = unidades_str(unidades)
+        print_menu(idioma, unidades)
+        opcion = input("Opción: ")
+
+        if opcion == "1":
             try:
-                weight = float(input("Enter weight (kg): "))
-                height = float(input("Enter height (m): "))
-                bmi_val = calc.bmi(weight, height)
-                classification = calc.bmi_classification(bmi_val)
-                print(f"\n-> Result: Your BMI is {bmi_val:.2f} ({classification})")
+                peso = float(input(f"Peso ({u['peso']}): "))
+                altura = float(input(f"Altura ({u['altura'] if unidades == 'us' else 'm'}): "))
+                # en EU pedimos metros igual que antes
+                bmi_val = calc.bmi(peso, altura)
+                clas = calc.bmi_classification(bmi_val)
+                print(f"\n-> BMI: {bmi_val:.2f} ({clas})")
             except Exception as e:
                 print(f"\nError: {e}")
-                
-        elif choice == '2':
+
+        elif opcion == "2":
             try:
-                height = float(input("Enter height (cm): "))
-                gender = input("Enter gender (man/woman): ")
-                ibw_val = calc.ibw(height, gender)
-                print(f"\n-> Result: Your Ideal Body Weight is {ibw_val:.2f} kg")
+                altura = float(input(f"Altura ({u['altura']}): "))
+                genero = input("Género (hombre/mujer): ")
+                ibw_val = calc.ibw(altura, genero)
+                print(f"\n-> IBW: {ibw_val:.2f} {u['peso']}")
             except Exception as e:
                 print(f"\nError: {e}")
-                
-        elif choice == '3':
+
+        elif opcion == "3":
             try:
-                resp = int(input("Enter Respiration Rate (bpm): "))
-                spo2 = int(input("Enter SpO2 (%): "))
-                supp_input = input("Are you on supplemental oxygen? (yes/no): ").strip().lower()
-                supp = supp_input in ['yes', 'y', 'true', '1']
-                sys_bp = int(input("Enter Systolic BP (mmHg): "))
-                hr = int(input("Enter Heart Rate (bpm): "))
-                consc = input("Enter Level of Consciousness (alert/cvpu): ")
-                temp = float(input("Enter Body Temperature (°C): "))
-                
-                score = calc.news2(resp, spo2, supp, sys_bp, hr, consc, temp)
-                print(f"\n-> Result: Your NEWS2 Score is {score}")
+                resp = int(input("Frecuencia respiratoria (rpm): "))
+                spo2 = int(input("SpO2 (%): "))
+                supp_in = input("¿Oxígeno suplementario? (s/n): ").strip().lower()
+                supp = supp_in in ["s", "si", "sí", "y", "yes", "1"]
+                sis = int(input("Presión sistólica (mmHg): "))
+                hr = int(input("Frecuencia cardiaca (lpm): "))
+                consc = input("Consciencia (alerta/cvpu): ")
+                temp = float(input(f"Temperatura ({u['temp']}): "))
+                score = calc.news2(resp, spo2, supp, sis, hr, consc, temp)
+                print(f"\n-> NEWS2: {score}")
             except Exception as e:
                 print(f"\nError: {e}")
-                
-        elif choice == '4':
+
+        elif opcion == "4":
             try:
-                print("\n--- Hospital System Simulation ---")
+                print("\n--- Hospital ---")
                 print("1. Hospital BMI")
                 print("2. Hospital IBW")
-                hospital_choice = input("Select hospital option (1-2): ").strip()
-
-                if hospital_choice == '1':
-                    altura_m = float(input("Hospital - Introduzca altura en cm: "))
-                    peso_g = int(input("Hospital - Introduzca peso en Kg: "))
-                    bmi, classification = hospital_service.indiceMasaCorporal(altura_m, peso_g)
-                    print(f"\n[Hospital API] -> IMC: {bmi:.2f} | Clasificación: {classification}")
-                elif hospital_choice == '2':
-                    genero = input("Hospital - Introduzca género (man/woman): ")
-                    altura_cm = float(input("Hospital - Introduzca altura en cm: "))
-                    ibw_val = hospital_service.pesoCorporalIdeal(genero, altura_cm)
-                    print(f"\n[Hospital API] -> Peso Corporal Ideal: {ibw_val} kg")
+                sub = input("Opción (1-2): ").strip()
+                if sub == "1":
+                    altura = float(input("Altura en cm: "))
+                    peso = int(input("Peso en Kg: "))
+                    bmi, clas = hospital.indiceMasaCorporal(altura, peso)
+                    print(f"\n[Hospital] IMC: {bmi:.2f} | {clas}")
+                elif sub == "2":
+                    genero = input("Género (man/woman): ")
+                    altura = float(input("Altura en cm: "))
+                    ibw_val = hospital.pesoCorporalIdeal(genero, altura)
+                    print(f"\n[Hospital] IBW: {ibw_val} kg")
                 else:
-                    print("Opción hospitalaria inválida. Intente 1 o 2.")
+                    print("Opción inválida.")
             except Exception as e:
-                print(f"\nError en la API del Hospital: {e}")
+                print(f"\nError: {e}")
 
-        elif choice == '5':
-            print("\n=== ESTADÍSTICAS DEL SISTEMA (HealthStats) ===")
-            total_pacientes = hospital_service.numTotalPacientes()
-            print(f"Número total de consultas: {total_pacientes}")
-            
-            if total_pacientes > 0:
-                print(f"Altura media de pacientes: {hospital_service.alturaMedia():.2f} cm")
-                print(f"Peso medio de pacientes: {hospital_service.pesoMedio():.2f} kg")
-                print(f"IMC medio registrado: {hospital_service.imcMedio():.2f}")
-                print(f"Cantidad de hombres (H): {hospital_service.numSexoH()}")
-                print(f"Cantidad de mujeres (M): {hospital_service.numSexoM()}")
+        elif opcion == "5":
+            print("\n=== Estadísticas Hospital ===")
+            total = hospital.numTotalPacientes()
+            print(f"Total consultas: {total}")
+            if total > 0:
+                print(f"Altura media: {hospital.alturaMedia():.2f} cm")
+                print(f"Peso medio: {hospital.pesoMedio():.2f} kg")
+                print(f"IMC medio: {hospital.imcMedio():.2f}")
+                print(f"Hombres: {hospital.numSexoH()}")
+                print(f"Mujeres: {hospital.numSexoM()}")
             else:
-                print("No hay datos registrados en el historial todavía. Realice consultas en la opción 4 primero.")
-            print("==============================================")
-        elif choice == '6':
-            print("Exiting HealthCalc...")
+                print("No hay datos todavía.")
+            print("==============================")
+
+        elif opcion == "6":
+            nuevo = input("Idioma (es/en): ").strip().lower()
+            if nuevo in ("es", "en"):
+                idioma = nuevo
+                calc = crear_calc(idioma, unidades)
+
+        elif opcion == "7":
+            nuevo = input("Unidades (eu/us): ").strip().lower()
+            if nuevo in ("eu", "us"):
+                unidades = nuevo
+                calc = crear_calc(idioma, unidades)
+
+        elif opcion == "8":
+            print("Saliendo...")
             break
         else:
-            print("Invalid option. Please try again.")
+            print("Opción inválida.")
 
 if __name__ == "__main__":
     main()

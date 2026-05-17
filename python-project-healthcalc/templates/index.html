@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ lang or 'es' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Clínica</title>
+    <title>{% if lang == 'en' %}Clinical Calculator{% else %}Calculadora Clínica{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
     <div class="container">
-        
+
+        <form method="POST" action="/settings" style="text-align:right;margin-bottom:10px;">
+            Idioma:
+            <select name="lang" onchange="this.form.submit()">
+                <option value="es" {% if lang == 'es' %}selected{% endif %}>Español</option>
+                <option value="en" {% if lang == 'en' %}selected{% endif %}>English</option>
+            </select>
+            Unidades:
+            <select name="units" onchange="this.form.submit()">
+                <option value="eu" {% if units == 'eu' %}selected{% endif %}>EU (kg, cm, °C)</option>
+                <option value="us" {% if units == 'us' %}selected{% endif %}>US (lb, in, °F)</option>
+            </select>
+            <noscript><button type="submit">OK</button></noscript>
+        </form>
+
         <div class="tabs-container">
             <a href="/bmi" class="tab-button {% if active_tab == 'bmi' %}active{% endif %}">BMI</a>
             <a href="/ibw" class="tab-button {% if active_tab == 'ibw' %}active{% endif %}">IBW</a>
@@ -19,22 +33,22 @@
         {% if active_tab == 'bmi' %}
         <div class="calculator-section">
             <h1 class="title">Body Mass Index</h1>
-            
+
             <form method="POST" action="/bmi">
                 <div class="inputs-row">
                     <div class="input-group">
-                        <label for="altura">Altura (cm)</label>
-                        <input type="number" id="altura" name="altura" step="any" 
+                        <label for="altura">{% if lang == 'en' %}Height{% else %}Altura{% endif %} ({{ u.height }})</label>
+                        <input type="number" id="altura" name="altura" step="any"
                                value="{{ altura if altura != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="peso">Peso (kg)</label>
-                        <input type="number" id="peso" name="peso" step="any" 
+                        <label for="peso">{% if lang == 'en' %}Weight{% else %}Peso{% endif %} ({{ u.weight }})</label>
+                        <input type="number" id="peso" name="peso" step="any"
                                value="{{ peso if peso != None else '' }}" required>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn-calcular">CALCULAR</button>
+
+                <button type="submit" class="btn-calcular">{% if lang == 'en' %}CALCULATE{% else %}CALCULAR{% endif %}</button>
             </form>
 
             {% if result != None or error %}
@@ -46,7 +60,7 @@
                         <label>BMI:</label>
                             <input type="text" value="{{ result|round(2) if result else '' }}" readonly>                    </div>
                     <div class="result-row">
-                        <label>Clasificación:</label>
+                        <label>{% if lang == 'en' %}Classification{% else %}Clasificación{% endif %}:</label>
                         <input type="text" value="{{ clasificacion }}" readonly>
                     </div>
                 {% endif %}
@@ -58,27 +72,27 @@
         {% if active_tab == 'ibw' %}
         <div class="calculator-section">
             <h1 class="title">Ideal Body Weight</h1>
-            
+
             <form method="POST" action="/ibw">
                 <div class="inputs-row">
                     <div class="input-group">
-                        <label for="altura">Altura (cm)</label>
-                        <input type="number" id="altura" name="altura" step="any" 
+                        <label for="altura">{% if lang == 'en' %}Height{% else %}Altura{% endif %} ({{ u.height }})</label>
+                        <input type="number" id="altura" name="altura" step="any"
                                value="{{ altura if altura != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label>Sexo</label>
+                        <label>{% if lang == 'en' %}Sex{% else %}Sexo{% endif %}</label>
                         <div class="radio-group">
                             <input type="radio" id="hombre" name="sexo" value="hombre" {% if sexo == 'hombre' %}checked{% endif %} required>
-                            <label for="hombre">Hombre</label>
-                            
+                            <label for="hombre">{% if lang == 'en' %}Man{% else %}Hombre{% endif %}</label>
+
                             <input type="radio" id="mujer" name="sexo" value="mujer" {% if sexo == 'mujer' %}checked{% endif %} required>
-                            <label for="mujer">Mujer</label>
+                            <label for="mujer">{% if lang == 'en' %}Woman{% else %}Mujer{% endif %}</label>
                         </div>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn-calcular">CALCULAR</button>
+
+                <button type="submit" class="btn-calcular">{% if lang == 'en' %}CALCULATE{% else %}CALCULAR{% endif %}</button>
             </form>
 
             {% if result != None or error %}
@@ -87,7 +101,7 @@
                     <p class="error">{{ error }}</p>
                 {% else %}
                     <div class="result-row">
-                        <input type="text" value="{{ result|round(2) if result else '' }} kg" readonly>
+                        <input type="text" value="{{ result|round(2) if result else '' }} {{ u.weight }}" readonly>
                     </div>
                 {% endif %}
             </div>
@@ -98,46 +112,46 @@
         {% if active_tab == 'news2' %}
         <div class="calculator-section">
             <h1 class="title">NEWS2 Score</h1>
-            
+
             <form method="POST" action="/news2">
                 <div class="inputs-grid">
                     <div class="input-group">
-                        <label for="frecResp">Frecuencia Respiratoria (rpm)</label>
+                        <label for="frecResp">{% if lang == 'en' %}Respiration Rate{% else %}Frecuencia Respiratoria{% endif %} (rpm)</label>
                         <input type="number" id="frecResp" name="frecResp" step="any" value="{{ frecResp if frecResp != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="frecCard">Frecuencia Cardíaca (lpm)</label>
+                        <label for="frecCard">{% if lang == 'en' %}Heart Rate{% else %}Frecuencia Cardíaca{% endif %} (lpm)</label>
                         <input type="number" id="frecCard" name="frecCard" step="any" value="{{ frecCard if frecCard != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="oxSat">Saturación O2 (%)</label>
+                        <label for="oxSat">{% if lang == 'en' %}O2 Saturation{% else %}Saturación O2{% endif %} (%)</label>
                         <input type="number" id="oxSat" name="oxSat" step="any" value="{{ oxSat if oxSat != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="preArtSis">Pres. Arterial Sistólica (mmHg)</label>
+                        <label for="preArtSis">{% if lang == 'en' %}Systolic BP{% else %}Pres. Arterial Sistólica{% endif %} (mmHg)</label>
                         <input type="number" id="preArtSis" name="preArtSis" step="any" value="{{ preArtSis if preArtSis != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="temp">Temperatura (°C)</label>
+                        <label for="temp">{% if lang == 'en' %}Temperature{% else %}Temperatura{% endif %} ({{ u.temp }})</label>
                         <input type="number" id="temp" name="temp" step="any" value="{{ temp if temp != None else '' }}" required>
                     </div>
                     <div class="input-group">
-                        <label for="consciente">Nivel de Consciencia</label>
+                        <label for="consciente">{% if lang == 'en' %}Consciousness Level{% else %}Nivel de Consciencia{% endif %}</label>
                         <select id="consciente" name="consciente" required>
-                            <option value="alerta" {% if consciente == 'alerta' %}selected{% endif %}>Alerta</option>
+                            <option value="alerta" {% if consciente == 'alerta' %}selected{% endif %}>{% if lang == 'en' %}Alert{% else %}Alerta{% endif %}</option>
                             <option value="cvpu" {% if consciente == 'cvpu' %}selected{% endif %}>CVPU</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label>Oxígeno Suplementario</label>
+                        <label>{% if lang == 'en' %}Supplemental Oxygen{% else %}Oxígeno Suplementario{% endif %}</label>
                         <div class="checkbox-group">
                             <input type="checkbox" id="oxSup" name="oxSup" value="true" {% if oxSup %}checked{% endif %}>
-                            <label for="oxSup">Sí</label>
+                            <label for="oxSup">{% if lang == 'en' %}Yes{% else %}Sí{% endif %}</label>
                         </div>
                     </div>
                 </div>
-                
-                <button type="submit" class="btn-calcular">CALCULAR</button>
+
+                <button type="submit" class="btn-calcular">{% if lang == 'en' %}CALCULATE{% else %}CALCULAR{% endif %}</button>
             </form>
 
             {% if result != None or error %}
@@ -146,7 +160,7 @@
                     <p class="error">{{ error }}</p>
                 {% else %}
                     <div class="result-row">
-                        <label>Puntuación NEWS2:</label>
+                        <label>{% if lang == 'en' %}NEWS2 Score{% else %}Puntuación NEWS2{% endif %}:</label>
                         <input type="text" value="{{ result }}" readonly>
                     </div>
                 {% endif %}
