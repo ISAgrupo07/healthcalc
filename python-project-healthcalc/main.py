@@ -4,6 +4,8 @@ from healthcalc.health_hospital_adapter import HealthHospitalAdapter
 from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
 from healthcalc.gender import Gender
+from healthcalc.BMICategory import BMICategory
+
 
 
 def crear_calc(idioma, unidades):
@@ -62,7 +64,7 @@ def main():
                 altura = float(input(f"Altura ({u['altura'] if unidades == 'us' else 'm'}): "))
                 # en EU pedimos metros igual que antes
                 bmi_val = calc.bmi(peso, altura)
-                clas = calc.bmi_classification(bmi_val)
+                clas = calc.bmi_classification(bmi_val).name
                 print(f"\n-> BMI: {bmi_val:.2f} ({clas})")
             except Exception as e:
                 print(f"\nError: {e}")

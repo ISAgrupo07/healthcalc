@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from healthcalc import InvalidHealthDataException
 from healthcalc.gender import Gender
+from healthcalc.BMICategory import BMICategory
 
 
 
@@ -8,11 +9,11 @@ class HealthCalc(ABC):
     """Interface for the calculator of health parameters."""
 
     @abstractmethod
-    def bmi_classification(self, bmi: float) -> str:
+    def bmi_classification(self, bmi: float) -> BMICategory:
         """Calculate the BMI classification of a person.
 
         :param bmi: Body Mass Index (kg/m2)
-        :return: String classification
+        :return: BMICategory classification
         :raises InvalidHealthDataException: If data is out of range
         """
         pass

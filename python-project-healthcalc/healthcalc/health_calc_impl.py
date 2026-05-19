@@ -1,5 +1,7 @@
 from healthcalc import HealthCalc, InvalidHealthDataException
 from healthcalc.gender import Gender
+from healthcalc.BMICategory import BMICategory
+
 
 
 class HealthCalcImpl(HealthCalc):
@@ -12,27 +14,27 @@ class HealthCalcImpl(HealthCalc):
             calc.instance = calc()
         return calc.instance
 
-    def bmi_classification(self, bmi: float) -> str:
+    def bmi_classification(self, bmi: float) -> BMICategory:
         if bmi < 0:
             raise InvalidHealthDataException("BMI cannot be negative.")
         if bmi > 150:
             raise InvalidHealthDataException("BMI must be within a possible biological range [0-150].")
         
-        result = "Obesity class III"
+        result = BMICategory.OBESE_CLASS_III
         if bmi <= 16:
-            return "Severe thinness"
+            return BMICategory.SEVERE_THINNESS
         elif bmi <= 17:
-            return "Moderate thinness"
+            return BMICategory.MODERATE_THINNESS
         elif bmi <= 18.5:
-            return "Mild thinness"
+            return BMICategory.MILD_THINNESS
         elif bmi <= 25:
-            return "Normal weight"
+            return BMICategory.NORMAL
         elif bmi <= 30:
-            return "Overweight"
+            return BMICategory.OVERWEIGHT
         elif bmi <= 35:
-            return "Obesity class I"
+            return BMICategory.OBESE_CLASS_I
         elif bmi <= 40:
-            return "Obesity class II"
+            return BMICategory.OBESE_CLASS_II
         return result
 
     def bmi(self, weight: float, height: float) -> float:

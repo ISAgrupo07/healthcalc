@@ -1,6 +1,8 @@
 import pytest
 from healthcalc.health_calc_impl import HealthCalcImpl
 from healthcalc.exceptions import InvalidHealthDataException
+from healthcalc.BMICategory import BMICategory
+
 
 
 class TestBMI:
@@ -90,25 +92,45 @@ class TestBMI:
 
     # --- Tests de Clasificación básica a partir del BMI ---
     
-    @pytest.mark.parametrize("bmi", [10.0, 18.4, 18.49], ids=lambda x: f"BMI {x} -> Underweight")
-    def test_bmi_underweight(self, bmi: float):
-        """Cálculo de clasificación BMI para Underweight."""
-        assert self.health_calc.bmi_classification(bmi) == "Underweight"
+    def test_bmi_severe_thinness(self):
+        """Cálculo de clasificación BMI para Severe thinness (<= 16)."""
+        bmi = 15.5
+        assert self.health_calc.bmi_classification(bmi).name == "SEVERE_THINNESS"
 
-    @pytest.mark.parametrize("bmi", [18.5, 22.0, 24.9, 24.99], ids=lambda x: f"BMI {x} -> Normal weight")
+    def test_bmi_moderate_thinness(self):
+        """Cálculo de clasificación BMI para Moderate thinness (16 < bmi <= 17)."""
+        bmi = 16.5
+        assert self.health_calc.bmi_classification(bmi).name == "MODERATE_THINNESS"
+
+    def test_bmi_mild_thinness(self):
+        """Cálculo de clasificación BMI para Mild thinness (17 < bmi <= 18.5)."""
+        bmi = 18.0
+        assert self.health_calc.bmi_classification(bmi).name == "MILD_THINNESS"
+
+    @pytest.mark.parametrize("bmi", [18.6, 22.0, 24.9, 24.99], ids=lambda x: f"BMI {x} -> Normal weight")
     def test_bmi_normal_weight(self, bmi: float):
         """Cálculo de clasificación BMI para Normal weight."""
-        assert self.health_calc.bmi_classification(bmi) == "Normal weight"
+        assert self.health_calc.bmi_classification(bmi).name == "NORMAL"
 
-    @pytest.mark.parametrize("bmi", [25.0, 27.5, 29.9, 29.99], ids=lambda x: f"BMI {x} -> Overweight")
+    @pytest.mark.parametrize("bmi", [25.1, 27.5, 29.9, 29.99], ids=lambda x: f"BMI {x} -> Overweight")
     def test_bmi_overweight(self, bmi: float):
         """Cálculo de clasificación BMI para Overweight."""
-        assert self.health_calc.bmi_classification(bmi) == "Overweight"
+        assert self.health_calc.bmi_classification(bmi).name == "OVERWEIGHT"
 
-    @pytest.mark.parametrize("bmi", [30.0, 35.0, 50.0], ids=lambda x: f"BMI {x} -> Obesity")
-    def test_bmi_obesity(self, bmi: float):
-        """Cálculo de clasificación BMI para Obesity."""
-        assert self.health_calc.bmi_classification(bmi) == "Obesity"
+    def test_bmi_obese_class_i(self):
+        """Cálculo de clasificación BMI para Obesity class I (30 < bmi <= 35)."""
+        bmi = 32.5
+        assert self.health_calc.bmi_classification(bmi).name == "OBESE_CLASS_I"
+
+    def test_bmi_obese_class_ii(self):
+        """Cálculo de clasificación BMI para Obesity class II (35 < bmi <= 40)."""
+        bmi = 38.0
+        assert self.health_calc.bmi_classification(bmi).name == "OBESE_CLASS_II"
+
+    def test_bmi_obese_class_iii(self):
+        """Cálculo de clasificación BMI para Obesity class III (> 40)."""
+        bmi = 45.0
+        assert self.health_calc.bmi_classification(bmi).name == "OBESE_CLASS_III"
 
     # --- Tests de Límites e Invalidación para la clasificación BMI ---
 

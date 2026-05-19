@@ -3,6 +3,8 @@ from healthcalc.health_calc_impl import HealthCalcImpl
 from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
 from healthcalc.gender import Gender
+from healthcalc.BMICategory import BMICategory
+
 
 app = Flask(__name__)
 app.secret_key = "clave-healthcalc"
@@ -64,7 +66,7 @@ def bmi():
                 altura_calc = altura
             bmi_value = calc.bmi(peso, altura_calc)
             result = bmi_value
-            clasificacion = calc.bmi_classification(bmi_value)
+            clasificacion = calc.bmi_classification(bmi_value).name
         except Exception as e:
             error = str(e)
 

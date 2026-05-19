@@ -2,3 +2,9 @@ Refactorización del atributo gender usado para el IBW (Primitive obsession)
 La refactorización es de atributo y ha consistido en una Clase Extract
 La Clase Extract es el enumerado gender que tiene valores MALE y FEMALE. Se ha cambiado el tipo del atributo en cada parte del código donde se llamaba al método IBW pero se le pasaba un string.
 5 cambios manuales en: main, main_web, health_calc, health_calc_impl y test_ibw.
+
+
+Refactorización del tipo de output de bmi_classification (Primitive obsession)
+La refactorización es de atributo y ha consistido en una Clase Extract
+La Clase Extract es el enumerado gender que tiene los posibles valores de BMI. Se ha adaptado en las partes corresponedientes del código cómo se trata la salida del método bmi_classification teniendo en cuenta que ahora es un tipo BMICategory y no un string.
+5 cambios manuales en: main, main_web, health_calc, health_calc_impl y test_bmi.
