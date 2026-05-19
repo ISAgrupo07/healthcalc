@@ -1,4 +1,5 @@
 from healthcalc import HealthCalc, InvalidHealthDataException
+from healthcalc.gender import Gender
 
 
 class HealthCalcImpl(HealthCalc):
@@ -46,16 +47,15 @@ class HealthCalcImpl(HealthCalc):
             
         return weight / (height ** 2)
     
-    def ibw(self, height_cm: float, gender: str) -> float:
+    def ibw(self, height_cm: float, gender: Gender) -> float:
         if height_cm <= 0:
             raise InvalidHealthDataException("Height must be positive.")
         if height_cm < 30 or height_cm > 300:
             raise InvalidHealthDataException("Height must be within a possible biological range [30-300] cm.")
 
-        gender_lower = gender.lower().strip()
-        if gender_lower in ["man", "hombre", "m"]:
+        if gender == Gender.MALE:
             result = (height_cm - 100) - ((height_cm - 150) / 4.0)
-        elif gender_lower in ["woman", "mujer", "f", "w"]:
+        elif gender == Gender.FEMALE:
             result = (height_cm - 100) - ((height_cm - 150) / 2.0)
         else:
             raise InvalidHealthDataException("Gender must be 'man' or 'woman'.")

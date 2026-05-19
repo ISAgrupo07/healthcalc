@@ -3,6 +3,8 @@ from healthcalc.health_hospital_proxy import HealthHospitalProxy
 from healthcalc.health_hospital_adapter import HealthHospitalAdapter
 from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
+from healthcalc.gender import Gender
+
 
 def crear_calc(idioma, unidades):
     base = HealthCalcImpl.getInstance()
@@ -69,6 +71,10 @@ def main():
             try:
                 altura = float(input(f"Altura ({u['altura']}): "))
                 genero = input("Género (hombre/mujer): ")
+                if (genero=="man") or (genero=="m") or (genero=="hombre"):
+                    genero = Gender.MALE
+                elif (genero=="woman") or (genero=="w") or (genero=="f") or (genero=="mujer"):
+                    genero = Gender.FEMALE
                 ibw_val = calc.ibw(altura, genero)
                 print(f"\n-> IBW: {ibw_val:.2f} {u['peso']}")
             except Exception as e:

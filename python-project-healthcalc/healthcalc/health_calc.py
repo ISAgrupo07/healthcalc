@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 from healthcalc import InvalidHealthDataException
+from healthcalc.gender import Gender
+
 
 
 class HealthCalc(ABC):
@@ -27,7 +29,7 @@ class HealthCalc(ABC):
         pass
 
     @abstractmethod
-    def ibw(self, height_cm: float, gender: str) -> float:
+    def ibw(self, height_cm: float, gender: Gender) -> float:
         """Calculate the Ideal Body Weight (IBW) based on Lorentz Formula.
         
         :param height_cm: Height (cm)

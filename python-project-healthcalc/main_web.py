@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from healthcalc.health_calc_impl import HealthCalcImpl
 from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
+from healthcalc.gender import Gender
 
 app = Flask(__name__)
 app.secret_key = "clave-healthcalc"
@@ -82,6 +83,10 @@ def ibw():
         try:
             altura = float(request.form["altura"])
             sexo = request.form["sexo"]
+            if (sexo=="man") or (sexo=="m") or (sexo=="hombre"):
+                sexo = Gender.MALE
+            elif (sexo=="woman") or (sexo=="w") or (sexo=="f") or (sexo=="mujer"):
+                sexo = Gender.FEMALE
             result = get_calc().ibw(altura, sexo)
         except Exception as e:
             error = str(e)
