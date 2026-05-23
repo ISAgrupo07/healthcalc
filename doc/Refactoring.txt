@@ -8,3 +8,9 @@ Refactorización del tipo de output de bmi_classification (Primitive obsession)
 La refactorización es de atributo y ha consistido en una Clase Extract
 La Clase Extract es el enumerado gender que tiene los posibles valores de BMI. Se ha adaptado en las partes corresponedientes del código cómo se trata la salida del método bmi_classification teniendo en cuenta que ahora es un tipo BMICategory y no un string.
 5 cambios manuales en: main, main_web, health_calc, health_calc_impl y test_bmi.
+
+
+Refactorización de los parámetros de los métodos BMI e IBW agrupados en Person (Long Parameter List / Primitive obsession)
+La refactorización es de clase y ha consistido en un Introduce Parameter Object y Extract Interface.
+La interfaz extraída es Person (junto con su implementación Patient) que agrupa los valores de peso, altura, género y edad. Se ha cambiado la firma de los métodos bmi, bmi_classification e ibw en cada parte del código para que reciban este objeto en lugar de pasarle las variables sueltas.
+12 cambios manuales en: main, main_web, health_calc, health_calc_impl, health_calc_decorator, language_decorator, unit_decorator, health_hospital_adapter, test_bmi, test_ibw, person y patient.
