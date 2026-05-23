@@ -5,6 +5,7 @@ from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
 from healthcalc.gender import Gender
 from healthcalc.BMICategory import BMICategory
+from healthcalc.patient import Patient
 
 
 
@@ -62,9 +63,9 @@ def main():
             try:
                 peso = float(input(f"Peso ({u['peso']}): "))
                 altura = float(input(f"Altura ({u['altura'] if unidades == 'us' else 'm'}): "))
-                # en EU pedimos metros igual que antes
-                bmi_val = calc.bmi(peso, altura)
-                clas = calc.bmi_classification(bmi_val).name
+                persona_bmi = Patient(peso, altura, Gender.MALE, 30)
+                bmi_val = calc.bmi(persona_bmi)
+                clas = calc.bmi_classification(persona_bmi).name
                 print(f"\n-> BMI: {bmi_val:.2f} ({clas})")
             except Exception as e:
                 print(f"\nError: {e}")
@@ -77,7 +78,9 @@ def main():
                     genero = Gender.MALE
                 elif (genero=="woman") or (genero=="w") or (genero=="f") or (genero=="mujer"):
                     genero = Gender.FEMALE
-                ibw_val = calc.ibw(altura, genero)
+                altura_calc = altura / 100.0 if unidades == "eu" else altura
+                persona_ibw = Patient(0.0, altura_calc, genero, 30)
+                ibw_val = calc.ibw(persona_ibw)
                 print(f"\n-> IBW: {ibw_val:.2f} {u['peso']}")
             except Exception as e:
                 print(f"\nError: {e}")
