@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from healthcalc import InvalidHealthDataException
 from healthcalc.gender import Gender
+from healthcalc.person import Person
 from healthcalc.BMICategory import BMICategory
 
 
@@ -9,35 +10,18 @@ class HealthCalc(ABC):
     """Interface for the calculator of health parameters."""
 
     @abstractmethod
-    def bmi_classification(self, bmi: float) -> BMICategory:
-        """Calculate the BMI classification of a person.
-
-        :param bmi: Body Mass Index (kg/m2)
-        :return: BMICategory classification
-        :raises InvalidHealthDataException: If data is out of range
-        """
+    def bmi_classification(self, person: Person) -> BMICategory:
+        """Calculate the BMI classification of a person."""
         pass
 
     @abstractmethod
-    def bmi(self, weight: float, height: float) -> float:
-        """Calculate the Body Mass Index (BMI).
-        
-        :param weight: Weight (kg)
-        :param height: Height (m)
-        :return: BMI value (kg/m2)
-        :raises InvalidHealthDataException: If data is out of range
-        """
+    def bmi(self, person: Person) -> float:
+        """Calculate the Body Mass Index (BMI)."""
         pass
 
     @abstractmethod
-    def ibw(self, height_cm: float, gender: Gender) -> float:
-        """Calculate the Ideal Body Weight (IBW) based on Lorentz Formula.
-        
-        :param height_cm: Height (cm)
-        :param gender: Gender ('man' or 'woman')
-        :return: Ideal Body Weight (kg)
-        :raises InvalidHealthDataException: If data is out of range
-        """
+    def ibw(self, person: Person) -> float:
+        """Calculate the Ideal Body Weight (IBW) based on Lorentz Formula."""
         pass
 
     @abstractmethod
