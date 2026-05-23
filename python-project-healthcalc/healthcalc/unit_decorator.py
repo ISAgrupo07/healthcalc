@@ -1,5 +1,7 @@
 from healthcalc.health_calc_decorator import HealthCalcDecorator
 from healthcalc.exceptions import InvalidHealthDataException
+from healthcalc.person import Person
+from healthcalc.patient import Patient
 
 # factores de conversion
 LB_A_KG = 0.45359237
@@ -35,18 +37,24 @@ class EuropeanUnit(UnitDecorator):
 class AmericanUnit(UnitDecorator):
     sistema = "us"
 
-    def bmi(self, weight, height):
-        peso_kg = weight * LB_A_KG
-        altura_m = height * IN_A_M
+    def bmi(self, person: Person):
+        peso_kg = person.weight() * LB_A_KG
+        altura_m = person.height() * IN_A_M
+        
+        paciente_convertido = Patient(peso_kg, altura_m, person.gender(), person.age())
+        
         try:
-            return self.calc.bmi(peso_kg, altura_m)
+            return self.calc.bmi(paciente_convertido)
         except InvalidHealthDataException as e:
             raise InvalidHealthDataException(adaptar_error(str(e)))
 
-    def ibw(self, height_cm, gender):
-        altura_cm = height_cm * IN_A_CM
+    def ibw(self, person: Person):
+        altura_m = person.height() * IN_A_M
+        
+        paciente_convertido = Patient(person.weight(), altura_m, person.gender(), person.age())
+        
         try:
-            resultado_kg = self.calc.ibw(altura_cm, gender)
+            resultado_kg = self.calc.ibw(paciente_convertido)
         except InvalidHealthDataException as e:
             raise InvalidHealthDataException(adaptar_error(str(e)))
         return resultado_kg * KG_A_LB
