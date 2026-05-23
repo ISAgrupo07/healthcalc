@@ -1,6 +1,8 @@
 from healthcalc import HealthCalc, InvalidHealthDataException
 from healthcalc.gender import Gender
+from healthcalc.person import Person
 from healthcalc.BMICategory import BMICategory
+
 
 
 
@@ -14,30 +16,36 @@ class HealthCalcImpl(HealthCalc):
             calc.instance = calc()
         return calc.instance
 
-    def bmi_classification(self, bmi: float) -> BMICategory:
-        if bmi < 0:
+    def bmi_classification(self, person: Person) -> BMICategory:
+
+        bmi_value = self.bmi(person)
+        
+        if bmi_value < 0:
             raise InvalidHealthDataException("BMI cannot be negative.")
-        if bmi > 150:
+        if bmi_value > 150:
             raise InvalidHealthDataException("BMI must be within a possible biological range [0-150].")
         
         result = BMICategory.OBESE_CLASS_III
-        if bmi <= 16:
+        if bmi_value <= 16:
             return BMICategory.SEVERE_THINNESS
-        elif bmi <= 17:
+        elif bmi_value <= 17:
             return BMICategory.MODERATE_THINNESS
-        elif bmi <= 18.5:
+        elif bmi_value <= 18.5:
             return BMICategory.MILD_THINNESS
-        elif bmi <= 25:
+        elif bmi_value <= 25:
             return BMICategory.NORMAL
-        elif bmi <= 30:
+        elif bmi_value <= 30:
             return BMICategory.OVERWEIGHT
-        elif bmi <= 35:
+        elif bmi_value <= 35:
             return BMICategory.OBESE_CLASS_I
-        elif bmi <= 40:
+        elif bmi_value <= 40:
             return BMICategory.OBESE_CLASS_II
         return result
 
-    def bmi(self, weight: float, height: float) -> float:
+    def bmi(self, person: Person) -> float:
+        weight = person.weight()
+        height = person.height()
+        
         if weight <= 0:
             raise InvalidHealthDataException("Weight must be positive.")
         if height <= 0:
@@ -49,7 +57,11 @@ class HealthCalcImpl(HealthCalc):
             
         return weight / (height ** 2)
     
-    def ibw(self, height_cm: float, gender: Gender) -> float:
+    def ibw(self, person: Person) -> float:
+        # Extraemos los datos de la persona. Pasamos la altura a cm multiplicando por 100
+        height_cm = person.height() * 100 
+        gender = person.gender()
+
         if height_cm <= 0:
             raise InvalidHealthDataException("Height must be positive.")
         if height_cm < 30 or height_cm > 300:
@@ -62,6 +74,7 @@ class HealthCalcImpl(HealthCalc):
         else:
             raise InvalidHealthDataException("Gender must be 'man' or 'woman'.")
         return result
+    
     
     def news2(self, frecResp: float, oxSat: float, oxSup: bool, preArtSis: float, frecCard: float, consciente: str, temp: float) -> float:
         news2 = 0
