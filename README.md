@@ -442,3 +442,37 @@ Se ha desarrollado una interfaz web para la calculadora de salud utilizando el f
 | :---: |
 | <img src="doc/gui/CapturaError.png" width="500"> |
 
+
+## Práctica 7: Refactorings
+
+En esta práctica hemos dividido la interfaz `HealthCalc` (que tenía todos los métodos juntos) en tres interfaces más pequeñas, una por métrica. `HealthCalc` hereda de las tres.
+
+<details>
+<summary><b>Refactoring 1: Interfaz BasalMetabolicIndex</b></summary>
+
+Refactorización de los métodos de BMI separados en su propia interfaz `BasalMetabolicIndex` (Large Class).  
+La refactorización es de clase y ha consistido en un Extract Interface.  
+La interfaz extraída es `BasalMetabolicIndex` que agrupa los métodos `bmi` y `bmi_classification` que estaban en `HealthCalc`. `HealthCalc` hereda de esta interfaz.  
+3 cambios manuales en: `basal_metabolic_index` (clase nueva), `health_calc` y `__init__`.
+
+</details>
+
+<details>
+<summary><b>Refactoring 2: Interfaz IdealBodyWeight</b></summary>
+
+Refactorización del método de IBW separado en su propia interfaz `IdealBodyWeight` (Large Class).  
+La refactorización es de clase y ha consistido en un Extract Interface.  
+La interfaz extraída es `IdealBodyWeight` que contiene el método `ibw` que estaban en `HealthCalc`. `HealthCalc` hereda de esta interfaz.  
+3 cambios manuales en: `ideal_body_weight` (clase nueva), `health_calc` y `__init__`.
+
+</details>
+
+<details>
+<summary><b>Refactoring 3: Interfaz News2</b></summary>
+
+Refactorización del método de NEWS2 separado en su propia interfaz `News2` (Large Class).  
+La refactorización es de clase y ha consistido en un Extract Interface.  
+La interfaz extraída es `News2` que contiene el método `news2` que estaban en `HealthCalc`. `HealthCalc` hereda de esta interfaz.  
+3 cambios manuales en: `news2_interface` (clase nueva), `health_calc` y `__init__`.
+
+</details>
