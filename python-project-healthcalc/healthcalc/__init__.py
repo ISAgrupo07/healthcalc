@@ -1,5 +1,6 @@
 from .exceptions import InvalidHealthDataException
 from .basal_metabolic_index import BasalMetabolicIndex
+from .ideal_body_weight import IdealBodyWeight
 from .health_calc import HealthCalc
 from .health_calc_impl import HealthCalcImpl
 from .health_calc_decorator import HealthCalcDecorator
@@ -9,6 +10,7 @@ from .unit_decorator import UnitDecorator, EuropeanUnit, AmericanUnit
 __all__ = [
     'InvalidHealthDataException',
     'BasalMetabolicIndex',
+    'IdealBodyWeight',
     'HealthCalc',
     'HealthCalcImpl',
     'HealthCalcDecorator',
