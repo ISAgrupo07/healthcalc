@@ -1,0 +1,28 @@
+Caso de Uso: Calcular Índice de Masa Corporal (BMI). 
+Actor principal: Usuario. 
+Ámbito: Calculadora de salud. 
+Nivel: Objetivo de usuario. 
+Descripción: El usuario quiere calcular su índice de masa corporal (BMI) y conocer su clasificación de salud. El sistema le pide al usuario que introduzca su peso y altura. Una vez introducida la información, el sistema comprueba que los datos sean válidos y estén dentro de los límites establecidos (peso entre 1kg y 700kg; altura entre 0.30m y 3.00m), se aplica la fórmula correspondiente para calcular el BMI y también se determina su clasificación (Underweight, Normal weight, Overweight u Obesity). Finalmente, ambos resultados se muestran al usuario en pantalla.
+Interesados: 
+ Usuario: Quiere evaluar su estado nutricional en base a la relación entre su peso y altura haciendo una estimación de grasa corporal.
+Precondiciones: La calculadora tiene que estar encendida y en el menú principal. 
+Disparador: El usuario elige la opción de calcular el BMI. 
+Garantía de éxito:
+El sistema calcula correctamente el BMI y su clasificación a partir de los datos introducidos y muestra correctamente el resultado al usuario.
+Garantía mínima:
+Si los datos introducidos no son válidos, el sistema informa del error y permite al usuario introducirlos nuevamente sin que la aplicación se bloquee.
+Escenario principal de éxito:
+1-El usuario selecciona la opción para calcular el BMI.
+2-El sistema le pide que introduzca su peso (en kg) y su altura (en m).
+3-El usuario introduce los dos datos.
+4-El sistema comprueba que el peso y la altura son números positivos y se encuentran dentro de los límites establecidos.
+5-El sistema calcula el BMI usando la fórmula correspondiente.
+6-El sistema calcula la clasificación de salud comprobando que el BMI calculado está en el rango posible (0-150).
+7-El sistema muestra el resultado final (métrica y clasificación) al usuario.
+Extensiones:
+4a. Datos de entrada inválidos:
+4a1. El usuario introduce datos inválidos o fuera de los límites establecidos.
+4a2. El sistema informa que los datos introducidos no son válidos y vuelve a pedir los datos (vuelve al paso 2).
+6a. Resultado de BMI imposible:
+6a1. La combinación de peso y altura introducida genera un BMI inválido.
+6a2. El sistema informa del error y vuelve a pedir los datos (vuelve al paso 2).
