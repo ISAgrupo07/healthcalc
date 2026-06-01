@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from healthcalc.health_calc_impl import HealthCalcImpl
 from healthcalc.language_decorator import SpanishLanguage, EnglishLanguage
 from healthcalc.unit_decorator import EuropeanUnit, AmericanUnit
+from healthcalc.gender import Gender
+from healthcalc.BMICategory import BMICategory
+from healthcalc.patient import Patient
+
 
 app = Flask(__name__)
 app.secret_key = "clave-healthcalc"
@@ -56,14 +60,15 @@ def bmi():
             altura = float(request.form["altura"])
             peso = float(request.form["peso"])
             calc = get_calc()
-            # si esta en eu hay que pasar cm a m, en us no
             if session.get("units", "eu") == "eu":
                 altura_calc = altura / 100
             else:
                 altura_calc = altura
-            bmi_value = calc.bmi(peso, altura_calc)
+            persona_bmi = Patient(peso, altura_calc, Gender.MALE, 30)
+            
+            bmi_value = calc.bmi(persona_bmi)
             result = bmi_value
-            clasificacion = calc.bmi_classification(bmi_value)
+            clasificacion = calc.bmi_classification(persona_bmi).name
         except Exception as e:
             error = str(e)
 
@@ -82,13 +87,22 @@ def ibw():
         try:
             altura = float(request.form["altura"])
             sexo = request.form["sexo"]
-            result = get_calc().ibw(altura, sexo)
+            if (sexo=="man") or (sexo=="m") or (sexo=="hombre"):
+                sexo = Gender.MALE
+            elif (sexo=="woman") or (sexo=="w") or (sexo=="f") or (sexo=="mujer"):
+                sexo = Gender.FEMALE
+            if session.get("units", "eu") == "eu":
+                altura_calc = altura / 100.0
+            else:
+                altura_calc = altura
+            persona_ibw = Patient(0.0, altura_calc, sexo, 30)
+            
+            result = get_calc().ibw(persona_ibw)
         except Exception as e:
             error = str(e)
 
     return render_template("index.html", active_tab="ibw", altura=altura, sexo=sexo,
                            result=result, error=error, **contexto())
-
 @app.route("/news2", methods=["GET", "POST"])
 def news2():
     result = None

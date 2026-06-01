@@ -1,5 +1,6 @@
 from healthcalc.health_calc_decorator import HealthCalcDecorator
 from healthcalc.exceptions import InvalidHealthDataException
+from healthcalc.person import Person
 
 # diccionarios de traduccion
 traducciones_bmi = {
@@ -42,22 +43,22 @@ class LanguageDecorator(HealthCalcDecorator):
     def traducir_error(self, msg):
         return msg
 
-    def bmi(self, weight, height):
+    def bmi(self, person: Person):
         try:
-            return self.calc.bmi(weight, height)
+            return self.calc.bmi(person)
         except InvalidHealthDataException as e:
             raise InvalidHealthDataException(self.traducir_error(str(e)))
 
-    def bmi_classification(self, bmi):
+    def bmi_classification(self, person: Person):
         try:
-            res = self.calc.bmi_classification(bmi)
+            res = self.calc.bmi_classification(person)
         except InvalidHealthDataException as e:
             raise InvalidHealthDataException(self.traducir_error(str(e)))
         return self.traducir(res)
 
-    def ibw(self, height_cm, gender):
+    def ibw(self, person: Person):
         try:
-            return self.calc.ibw(height_cm, gender)
+            return self.calc.ibw(person)
         except InvalidHealthDataException as e:
             raise InvalidHealthDataException(self.traducir_error(str(e)))
 
