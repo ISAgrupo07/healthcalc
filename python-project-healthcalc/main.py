@@ -1,5 +1,5 @@
-import sys
 from healthcalc.health_calc_impl import HealthCalcImpl
+
 
 def print_menu():
     print("\n=== HealthCalc ===")

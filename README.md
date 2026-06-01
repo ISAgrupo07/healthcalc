@@ -311,6 +311,7 @@ También se comprueba que el sistema detecte valores no válidos en la escala de
 
 ### Dependencias
 - Python 3.13+
+- Flask
 - pytest
 - coverage
 - pytest-cov
@@ -326,9 +327,10 @@ También se comprueba que el sistema detecte valores no válidos en la escala de
 5. Instalar dependencias: `pip install -r requirements.txt`
 
 ### Ejecución
-- Ejecutar la aplicación: `python main.py <número>`
+- Ejecutar la aplicación por terminal (CLI): `python main.py`
+- Ejecutar la interfaz web (GUI): `python main_web.py` y abrir en el navegador `http://127.0.0.1:5000`
 - Ejecutar los tests: `pytest -v`
-- Ejecutar los tests con informe de cobertura: `pytest -v --cov=factorial --cov-report=html tests/`
+- Ejecutar los tests con informe de cobertura: `pytest -v --cov=healthcalc --cov-report=html tests/`
 
 </details>
 
@@ -369,3 +371,65 @@ A continuación se enlazan las especificaciones formales de los casos de uso imp
 * [Especificación de BMI](doc/Especificacion_BMI.txt)
 * [Especificación de IBW](doc/especificación_IBW.txt)
 * [Especificación de NEWS2](doc/Especificacion_NEWS2.txt)
+## Behaviour Driven Development
+Los detalles del sistema se han descrito con historias de usuario:
+<details>
+<summary><b>User Story del cálculo de BMI</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario, quiero calcular mi BMI para conocer mi estado de salud.* | 1. Calcular el BMi correctamente <br> 2. Altura inválida <br> 3. Peso inválido | [bmi.feature](./features/bmi.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story de la clasificación de BMI</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero conocer la clasificación de mi BMI para entender mi estado de salud.* | 1. Clasificación normal <br> 2. Bajo peso <br> 3. Sobrepeso <br> 4. BMI inválido negativo | [bmi_classification.feature](./features/bmi_classification.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story del cálculo de IBW</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero calcular mi peso corporal ideal (IBW) para tener una referencia de peso saludable.* | 1. Cálculo correcto para un hombre <br> 2. Cálculo correcto para una mujer <br> 3. Altura por debajo del rango válido <br> 4. Altura por encima del rango válido <br> 5. Altura igual a cero <br> 6. Género no reconocido | [ibw.feature](./features/ibw.feature) |
+
+</details>
+
+<details>
+<summary><b>User Story del cálculo de NEWS2</b></summary>
+
+| User Story | Escenarios de Prueba | Archivo Fuente |
+| :--- | :--- | :--- |
+| *Como usuario quiero calcular la puntuación NEWS2 de un paciente para medir el deterioro fisiológico del paciente.* | 1. Cálculo correcto <br> 2. Cálculo coon valores en puntos límites <br> 3. Valores fuera del rango válido | [news2.feature](./features/news2.feature) |
+
+</details>
+
+## Interfaz Gráfica de Usuario
+
+Se ha desarrollado una interfaz web para la calculadora de salud utilizando el framework **Flask** (Python) siguiendo el patrón de diseño **Modelo-Vista-Controlador (MVC)**:
+
+- **Modelo:** Lógica de negocio en `healthcalc/health_calc_impl.py` (cálculo de BMI, IBW y NEWS2).
+- **Vista:** Plantilla HTML en `templates/index.html` con estilos en `static/css/style.css`.
+- **Controlador:** Rutas Flask en `main_web.py` que recogen los datos del formulario, llaman al modelo y devuelven la vista con los resultados.
+
+### Prototipo (Bocetos)
+
+| BMI | IBW | NEWS2 |
+| :---: | :---: | :---: |
+| <img src="python-project-healthcalc/doc/gui/BocetoBMI.png" width="500"> | <img src="python-project-healthcalc/doc/gui/BocetoIBW.png" width="500"> | <img src="python-project-healthcalc/doc/gui/BocetoNEWS2.png" width="500"> |
+
+### Capturas de la aplicación
+
+| BMI | IBW | NEWS2 |
+| :---: | :---: | :---: |
+| <img src="python-project-healthcalc/doc/gui/CapturaBMI.png" width="500"> | <img src="python-project-healthcalc/doc/gui/CapturaIBW.png" width="500"> | <img src="python-project-healthcalc/doc/gui/CapturaNEWS2.png" width="500"> |
+
+| Gestión de errores |
+| :---: |
+| <img src="python-project-healthcalc/doc/gui/CapturaError.png" width="500"> |
+
