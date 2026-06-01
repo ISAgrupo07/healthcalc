@@ -409,6 +409,28 @@ Los detalles del sistema se han descrito con historias de usuario:
 
 </details>
 
+## Patrones de diseño
+
+### Singleton — `HealthCalcImpl`
+Con el patrón Singleton nos aseguramos de que solo haya una instancia de la calculadora en todo el programa.
+
+<img src="doc/design_patterns/Singleton.png" width="500">
+
+### Adapter — `HealthHospitalAdapter`
+El patrón Adapter lo usamos para que nuestra calculadora pueda comunicarse con el sistema del hospital aunque las interfaces sean distintas.
+
+<img src="doc/design_patterns/Adapter.png" width="500">
+
+### Proxy — `HealthHospitalProxy`
+El patrón Proxy está entre el cliente y la calculadora del hospital para validaciones o controles extra antes de que se ejecute la operación final.
+
+<img src="doc/design_patterns/Proxy.png" width="500">
+
+### Decorator — `HealthCalcDecorator`, `LanguageDecorator`, `UnitDecorator`
+Con el patrón Decorator añadimos funcionalidades nuevas a la calculadora sin modificar el componente original. Hemos creado dos decoradores: uno para cambiar el idioma (`LanguageDecorator`) y otro para convertir unidades de medida (`UnitDecorator`).
+
+<img src="doc/design_patterns/Decorator.png" width="500">
+
 ## Interfaz Gráfica de Usuario
 
 Se ha desarrollado una interfaz web para la calculadora de salud utilizando el framework **Flask** (Python) siguiendo el patrón de diseño **Modelo-Vista-Controlador (MVC)**:
@@ -421,15 +443,15 @@ Se ha desarrollado una interfaz web para la calculadora de salud utilizando el f
 
 | BMI | IBW | NEWS2 |
 | :---: | :---: | :---: |
-| <img src="python-project-healthcalc/doc/gui/BocetoBMI.png" width="500"> | <img src="python-project-healthcalc/doc/gui/BocetoIBW.png" width="500"> | <img src="python-project-healthcalc/doc/gui/BocetoNEWS2.png" width="500"> |
+| <img src="doc/gui/BocetoBMI.png" width="500"> | <img src="doc/gui/BocetoIBW.png" width="500"> | <img src="doc/gui/BocetoNEWS2.png" width="500"> |
 
 ### Capturas de la aplicación
 
 | BMI | IBW | NEWS2 |
 | :---: | :---: | :---: |
-| <img src="python-project-healthcalc/doc/gui/CapturaBMI.png" width="500"> | <img src="python-project-healthcalc/doc/gui/CapturaIBW.png" width="500"> | <img src="python-project-healthcalc/doc/gui/CapturaNEWS2.png" width="500"> |
+| <img src="doc/gui/CapturaBMI.png" width="500"> | <img src="doc/gui/CapturaIBW.png" width="500"> | <img src="doc/gui/CapturaNEWS2.png" width="500"> |
 
 | Gestión de errores |
 | :---: |
-| <img src="python-project-healthcalc/doc/gui/CapturaError.png" width="500"> |
+| <img src="doc/gui/CapturaError.png" width="500"> |
 

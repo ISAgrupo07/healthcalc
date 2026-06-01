@@ -3,6 +3,14 @@ from healthcalc import HealthCalc, InvalidHealthDataException
 
 class HealthCalcImpl(HealthCalc):
 
+    instance = None 
+
+    @classmethod
+    def getInstance(calc) -> HealthCalc:
+        if calc.instance is None:
+            calc.instance = calc()
+        return calc.instance
+
     def bmi_classification(self, bmi: float) -> str:
         if bmi < 0:
             raise InvalidHealthDataException("BMI cannot be negative.")
