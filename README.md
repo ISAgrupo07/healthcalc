@@ -489,3 +489,15 @@ La interfaz extraída es `News2` que contiene el método `news2` que estaban en 
 3 cambios manuales en: `news2_interface` (clase nueva), `health_calc` y `__init__`.
 
 </details>
+
+## Práctica 8: Planificación nueva app web HealthCalc
+
+Para la planificación de este nuevo proyecto, una aplicación web basada en la calculadora HelthCalc desarrollada anteriormente, se ha utilizado Github Projects y se han definido 2 vistas principales: un tablero Kanban para gestionar las tareas y un diagrama de Gantt para visualizar la planificación temporal del proyecto.
+
+### Tablero Kanban
+
+![Tablero Kanban P8](doc/planification/p8-kanban.png)
+
+### Diagrama de Gantt
+
+![Diagrama de Gantt P8](doc/planification/p8-gantt.png)
